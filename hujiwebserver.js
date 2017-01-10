@@ -9,31 +9,67 @@ const DEFAULT_COMMAND = '/';
 
 var processCompleteHttpRequest = function (information) {
    return {
-       params: []
-       ,
+       params: {
 
+       },
+       query: {
+
+       },
+       body: {
+
+       },
+       headers: {
+
+       },
+       get: function (field) {
+           if (field in this.headers) {
+               return this.headers.field;
+           }
+       },
+       param: function (name) {
+           if (name in this.params) {
+               return this.params.name;
+           }
+           if (name in this.body) {
+               return this.body.name;
+           }
+           if (name in this.query) {
+               return this.query.name;
+           }
+       },
+       is: function (type) {
+           
+       }
    }
 };
 
-var createEmptyResponse = function () {
+var createEmptyResponse = function (socket) {
     return {
-        set: function () {
-
+        htmlResponse: {initialLine:{}, headers:{}}
+        ,
+        socket: socket
+        ,
+        set: function (field, value) {
+            this.htmlResponse.headers.field = value;
         },
-        get: function () {
-
+        get: function (field) {
+            return this.htmlResponse.headers.field;
         },
-        status: function () {
-
+        status: function (code) {
+            this.htmlResponse.initialLine.status = code;
         },
         cookie: function () {
 
         },
-        send: function () {
-            // We're
-            var socket = null;
-            net.
-
+        send: function (body) {
+            responseMsg = this.htmlResponse.initialLine.status + "/r/n";
+            for (var key in this.htmlResponse.headers) {
+                if (this.htmlResponse.headers.hasOwnProperty(key)) {
+                    responseMsg += key + ": " + this.htmlResponse.headers.key + "/r/n";
+                }
+            }
+            responseMsg += body;
+            this.socket.write(responseMsg);
         },
         json: function () {
 
@@ -59,7 +95,7 @@ module.exports = {
             socket.on("end", function () {
                 // Create response containing all info
                 var req = processCompleteHttpRequest(allInformationSoFar);
-                var res = createEmptyResponse(); // Create an empty response object containing: send(), json(), etc., etc.
+                var res = createEmptyResponse(socket); // Create an empty response object containing: send(), json(), etc., etc.
 
                 var alreadyCalledCommands = [];
                 var next = function () {
