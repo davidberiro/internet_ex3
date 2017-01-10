@@ -1,0 +1,9 @@
+{
+  "dbs": {
+    "test": [{
+      "username": "hello",
+      "password": "test",
+      "port": 450
+    }]
+  }
+}

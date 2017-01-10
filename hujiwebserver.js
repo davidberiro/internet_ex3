@@ -1,11 +1,46 @@
 const net = require("net");
-
+const fs = require("fs");
 const DEFAULT_COMMAND = '/';
 
-var socketRequest = socketListen(function (err, socketInput) {
-    parseSocketRequest(socketRequest);
-});
-console.log('Hello!');
+// var socketRequest = socketListen(function (err, socketInput) {
+//     parseSocketRequest(socketRequest);
+// });
+// console.log('Hello!');
+
+var processCompleteHttpRequest = function (information) {
+   return {
+       params: []
+       ,
+
+   }
+};
+
+var createEmptyResponse = function () {
+    return {
+        set: function () {
+
+        },
+        get: function () {
+
+        },
+        status: function () {
+
+        },
+        cookie: function () {
+
+        },
+        send: function () {
+            // We're
+            var socket = null;
+            net.
+
+        },
+        json: function () {
+
+        }
+    };
+};
+
 
 module.exports = {
     commands: [],
@@ -21,10 +56,10 @@ module.exports = {
     start: function (port, callback) {
         var server = net.createServer(function (socket) {
             var allInformationSoFar = '';
-            socket.on('end', function () {
+            socket.on("end", function () {
                 // Create response containing all info
                 var req = processCompleteHttpRequest(allInformationSoFar);
-                res = createEmptyResponse(); // Create an empty response object containing: send(), json(), etc., etc.
+                var res = createEmptyResponse(); // Create an empty response object containing: send(), json(), etc., etc.
 
                 var alreadyCalledCommands = [];
                 var next = function () {
@@ -36,12 +71,12 @@ module.exports = {
                 next();
             });
 
-            socket.on('error', function (err) {
+            socket.on("error", function (err) {
                 callback('Error creating server: ' + err);
             });
 
             // More events for receiving data, whether HTTP request is over, etc.
-            socket.on('connection', function (data) {
+            socket.on("data", function (data) {
                 allInformationSoFar += data;
             });
 
