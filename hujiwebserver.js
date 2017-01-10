@@ -77,6 +77,7 @@ var createEmptyResponse = function (socket) {
     };
 };
 
+//var socketList = [];
 
 module.exports = {
     commands: [],
@@ -91,6 +92,7 @@ module.exports = {
     },
     start: function (port, callback) {
         var server = net.createServer(function (socket) {
+            //socketList.push(socket);
             var allInformationSoFar = '';
             socket.on("end", function () {
                 // Create response containing all info
