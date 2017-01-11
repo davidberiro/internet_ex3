@@ -77,7 +77,7 @@ var createEmptyResponse = function (socket) {
     };
 };
 
-//var socketList = [];
+var clients = [];
 
 module.exports = {
     commands: [],
@@ -92,37 +92,42 @@ module.exports = {
     },
     start: function (port, callback) {
         var server = net.createServer(function (socket) {
-            //socketList.push(socket);
+            clients.push(socket);
             var allInformationSoFar = '';
-            socket.on("end", function () {
-                // Create response containing all info
-                var req = processCompleteHttpRequest(allInformationSoFar);
-                var res = createEmptyResponse(socket); // Create an empty response object containing: send(), json(), etc., etc.
+            socket.on('end', function () {
+                // // Create response containing all info
+                // var req = processCompleteHttpRequest(allInformationSoFar);
+                // var res = createEmptyResponse(socket); // Create an empty response object containing: send(), json(), etc., etc.
+                //
+                // var alreadyCalledCommands = [];
+                // var next = function () {
+                //     commandAndMiddleware = this._chooseBestCommandToMatchRequestExcludingAlreadyUsedOnes(
+                //         req, alreadyCalledCommands);
+                //     alreadyCalledCommands.push(commandAndMiddleware.command);
+                //     commandAndMiddleware.middleware(req, res, next);
+                // };
+                // next();
+                console.log("client disconneceted");
 
-                var alreadyCalledCommands = [];
-                var next = function () {
-                    commandAndMiddleware = this._chooseBestCommandToMatchRequestExcludingAlreadyUsedOnes(
-                        req, alreadyCalledCommands);
-                    alreadyCalledCommands.push(commandAndMiddleware.command);
-                    commandAndMiddleware.middleware(req, res, next);
-                };
-                next();
+                clients.splice(clients.indexOf(socket), 1);
             });
 
-            socket.on("error", function (err) {
+            socket.on('error', function (err) {
                 callback('Error creating server: ' + err);
             });
 
             // More events for receiving data, whether HTTP request is over, etc.
-            socket.on("data", function (data) {
+            socket.on('data', function (data) {
                 allInformationSoFar += data;
+                console.log("received data");
             });
 
 
         });
+        server.listen(port);
         return {
             stop: function () {
-
+                //socket.destroy() for each socket in clients
             },
             port: port
         };
