@@ -1,25 +1,28 @@
-const net = require("net");
-const fs = require("fs");
+const net = require('net');
+const fs = require('fs');
 const httpCodes = require('./httpCodes');
 const DEFAULT_COMMAND = '/';
 
-// var socketRequest = socketListen(function (err, socketInput) {
+// var socketRequest = clientsen(function (err, socketInput) {
 //     parseSocketRequest(socketRequest);
 // });
 // console.log('Hello!');
 
-var processCompleteHttpRequest = function (information) {
-    var obj = parseRequest(information);
+var processCompleteHttpRequest = function (information, matchingCommand, parsedRequest) {
+    //var obj = parseRequest(information);
+    // -- now passed as parameter parsedRequest,
+    //so that it can be used before to find the matching command in the socket.end event
     var body = null;
+
     return {
-        params: { // obj['params']
+        params: { // parsedRequest['params']
 
         },
-        query: { // obj['query']
+        query: { // parsedRequest['query']
 
         },
         body: function () {
-            // Parse the body object.
+            // Parse the body parsedRequestect.
             // TODO: fixed body to deal with ->("POST name=tobi&hobby=ass" should
             // TODO: give tobi for req.param(name) .. check it.
 
@@ -27,40 +30,42 @@ var processCompleteHttpRequest = function (information) {
             if (body) {
                 return body;
             }
-            if(obj.method === 'POST' && obj.headers['Content-Type'] === 'application/x-www-form-urlencoded' ){
-                body = parseParameters(obj.body);
-            } else if (false) {
+            if (parsedRequest.method === 'POST' && parsedRequest.headers['Content-Type'] === 'application/x-www-form-urlencoded' ){
+                body = parseParameters(parsedRequest.body);
+            }
+            else if (false) {
                 // other instances of the post body and how we parse it ..
                 // maybe we should create a file that parses everything fully..
-            } else {
+            }
+            else {
                 // the thing we got from the parse function (as it was before
                 // (unrecognised info response should be an error)
-                body = obj.body
+                body = parsedRequest.body
             }
             return body;
         },
-        headers: { // obj['headers']
+        headers: { // parsedRequest['headers']
 
         },
         get: function (field) { // would check for "Content-Type"     //// used it in the is() function.
            if (field in this.headers) {
-               return this.headers.field;
+               return this.headers[field];
+           }
+           else if(field.toLowerCase() in this.headers){          //would check for "content-type" aswell TODO:uncomment this shit .
+               var lowerField = field.toLowerCase();
+               return this.headers[lowerField];
            }
            return null;
-           // else if(field.toLowerCase() in this.headers){          //would check for "content-type" aswell TODO:uncomment this shit .
-           //     var lowerField = field.toLowerCase();
-           //     return this.headers.lowerField;
-           // }
         },
         param: function (name) { //
            if (name in this.params) { // deal with "user/:name" command
-               return this.params.name; /// i changed it to else if instead of if.
+               return this.params[name]; /// i changed it to else if instead of if.
            }
            if (name in this.body) { // took it from post method or any other..
-               return this.body.name;
+               return this.body[name];
            }
            if (name in this.query) { // done i guess .. does the get method have ?name=a&last=b?? (cuz we used that in the parsing function.
-               return this.query.name;
+               return this.query[name];
            }
            return null;
         },
@@ -83,13 +88,13 @@ var processCompleteHttpRequest = function (information) {
 };
 
 var parseParameters = function (paramsStr) {
-    var bodyObj = {};
+    var bodyParsedRequest = {};
     var splitBody = paramsStr.split('&');
     splitBody.forEach(function (data) {
         data = data.split('=');
-        bodyObj[data[0]] = data[1];
+        bodyParsedRequest[data[0]] = data[1];
     });
-    return bodyObj;
+    return bodyParsedRequest;
 };
 
 var createEmptyResponse = function (socket) {
@@ -110,6 +115,7 @@ var createEmptyResponse = function (socket) {
                 throw new Error('Invalid status code');
             }
             htmlResponse.initialLine.status = code;
+            htmlResponse.initialLine.msg = httpCodes[code];
             return this;
         },
         cookie: function () {
@@ -117,12 +123,13 @@ var createEmptyResponse = function (socket) {
         },
         send: function (body) {
             // Send status, cookies, Content-TYpe, etc.
-            var responseMsg = htmlResponse.initialLine.status + "/r/n";
+            var responseMsg = htmlResponse.initialLine.status + " " + htmlResponse.initialLine.msg + "/r/n";
             for (var key in htmlResponse.headers) {
                 if (htmlResponse.headers.hasOwnProperty(key)) {
                     responseMsg += key + ": " + htmlResponse.headers.key + "/r/n";
                 }
             }
+            responseMsg += "/r/n";
             responseMsg += body;
             socket.write(responseMsg);
             // TODO: CLose connection, end.
@@ -136,7 +143,11 @@ var createEmptyResponse = function (socket) {
     };
 };
 
-var socketList = [];
+var chooseBestCommand = function(commands, alreadyCalledCommands, command) {
+
+}
+
+var clients = [];
 
 module.exports = {
     commands: [],
@@ -152,18 +163,26 @@ module.exports = {
     start: function (port, callback) {
         console.log('Starting...');
         var server = net.createServer(function (socket) {
-            //socketList.push(socket);
+            //adding to clients
+            socket.key = socket.remoteAddress + ":" + socket.remotePort;
+            clients.push(socket);
             var allInformationSoFar = '';
+
+            //socket end event
             socket.on("end", function () {
-                console.log('End');
-                // Create response containing all info
-                var req = processCompleteHttpRequest(allInformationSoFar);
-                var res = createEmptyResponse(socket); // Create an empty response object containing: send(), json(), etc., etc.
+                console.log('Ending connection at %s', socket.key);
 
                 var alreadyCalledCommands = [];
+                var parsedRequest = parseRequest(allInformationSoFar);
+                var command = parsedRequest.path;
+                var commandMatch = chooseBestCommand(commands, alreadyCalledCommands, command);
+                // Create response containing all info
+                var req = processCompleteHttpRequest(allInformationSoFar, commandMatch);
+                var res = createEmptyResponse(socket); // Create an empty response parsedRequestect containing: send(), json(), etc., etc.
+
+
                 var next = function () {
-                    commandAndMiddleware = this._chooseBestCommandToMatchRequestExcludingAlreadyUsedOnes(
-                        req, alreadyCalledCommands);
+                    commandAndMiddleware = chooseBestCommand();
                     alreadyCalledCommands.push(commandAndMiddleware.command);
                     commandAndMiddleware.middleware(req, res, next);
                 };
@@ -171,6 +190,7 @@ module.exports = {
                 //socket.destroy();
             });
 
+            //socket error event
             socket.on("error", function (err) {
                 callback('Error creating server: ' + err);
             });
@@ -189,18 +209,19 @@ module.exports = {
         return {
             stop: function () {
                 server.close(); //(callback);??? ...stops accepting new connections.
-                socketList.forEach(function(socket,index){ // sockets already contains the socket that was added when the server was first created.
-                    // var index = socketList.indexOf(socket);
-                    socket.destroy();
-                    socketList.splice(index, 1); // remove from the list .. but the list is changing .. dont know if this is a good idea.
-                    // use ((delete socketlist[index] .. leaves an "undefined" instead of the element (doesnt change list)
+                clients.forEach(function(client){ // sockets already contains the socket that was added when the server was first created.
+                    // var index = clients.indexOf(socket);
+
+                    clients.splice(clients.indexOf(client), 1);
+                    client.destroy();
+                    // remove from the list .. but the list is changing .. dont know if this is a good idea.
+                    // use ((delete clients[index] .. leaves an "undefined" instead of the element (doesnt change list)
                 });
+
             },
             port: port
         };
-        //return a serverObj object that wraps the server variable which allow you to stop listening
-        //return {stop:{server.stop?()}...} //<-- e.g.
-
+        
     }
 
 };
