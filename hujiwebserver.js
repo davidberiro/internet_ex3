@@ -145,7 +145,8 @@ var createEmptyResponse = function (socket) {
 };
 
 var chooseBestCommand = function (commands, alreadyCalledCommands, command) {
-
+    //iterates over commands, if its not in already calledcommands checks if its
+    //a match, and if so returns {command, middleware}
 }
 
 var clients = [];
