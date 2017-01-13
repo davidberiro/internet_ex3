@@ -30,7 +30,7 @@ var processCompleteHttpRequest = function (information, matchingCommand, parsedR
             if (body) {
                 return body;
             }
-            if (parsedRequest.method === 'POST' && parsedRequest.headers['Content-Type'] === 'application/x-www-form-urlencoded' ){
+            if (parsedRequest.method === 'POST' && parsedRequest.headers['Content-Type'] === 'application/x-www-form-urlencoded') {
                 body = parseParameters(parsedRequest.body);
             }
             else if (false) {
@@ -48,28 +48,28 @@ var processCompleteHttpRequest = function (information, matchingCommand, parsedR
 
         },
         get: function (field) { // would check for "Content-Type"     //// used it in the is() function.
-           if (field in this.headers) {
-               return this.headers[field];
-           }
-           else if(field.toLowerCase() in this.headers){          //would check for "content-type" aswell TODO:uncomment this shit .
-               var lowerField = field.toLowerCase();
-               return this.headers[lowerField];
-           }
-           return null;
+            if (field in this.headers) {
+                return this.headers[field];
+            }
+            else if (field.toLowerCase() in this.headers) {          //would check for "content-type" aswell TODO:uncomment this shit .
+                var lowerField = field.toLowerCase();
+                return this.headers[lowerField];
+            }
+            return null;
         },
         param: function (name) { //
-           if (name in this.params) { // deal with "user/:name" command
-               return this.params[name]; /// i changed it to else if instead of if.
-           }
-           if (name in this.body) { // took it from post method or any other..
-               return this.body[name];
-           }
-           if (name in this.query) { // done i guess .. does the get method have ?name=a&last=b?? (cuz we used that in the parsing function.
-               return this.query[name];
-           }
-           return null;
+            if (name in this.params) { // deal with "user/:name" command
+                return this.params[name]; /// i changed it to else if instead of if.
+            }
+            if (name in this.body) { // took it from post method or any other..
+                return this.body[name];
+            }
+            if (name in this.query) { // done i guess .. does the get method have ?name=a&last=b?? (cuz we used that in the parsing function.
+                return this.query[name];
+            }
+            return null;
         },
-        is: function(type) { // could be one of 3 cases "html" or"text/html" or "text/*"
+        is: function (type) { // could be one of 3 cases "html" or"text/html" or "text/*"
             // type = type.split(';')[0]; // text/html
             type = type.split('/'); // ["text", "html"]
             var receivedType = this.get('Content-Type'); /////////// could be text/html; charset=utf-8
@@ -143,7 +143,7 @@ var createEmptyResponse = function (socket) {
     };
 };
 
-var chooseBestCommand = function(commands, alreadyCalledCommands, command) {
+var chooseBestCommand = function (commands, alreadyCalledCommands, command) {
 
 }
 
@@ -157,7 +157,7 @@ module.exports = {
             middleware = cmd;
             cmd = DEFAULT_COMMAND;
         }
-        this.commands.push({ command: cmd, middleware: middleware });
+        this.commands.push({command: cmd, middleware: middleware});
         return this;
     },
     start: function (port, callback) {
@@ -209,7 +209,7 @@ module.exports = {
         return {
             stop: function () {
                 server.close(); //(callback);??? ...stops accepting new connections.
-                clients.forEach(function(client){ // sockets already contains the socket that was added when the server was first created.
+                clients.forEach(function (client) { // sockets already contains the socket that was added when the server was first created.
                     // var index = clients.indexOf(socket);
 
                     clients.splice(clients.indexOf(client), 1);
@@ -221,28 +221,33 @@ module.exports = {
             },
             port: port
         };
-        
+
     }
 
 };
 
 /// functions that were added
 
-function parseRequest(requestText){
+function parseRequest(requestText) {
     var separateBody = requestText.split('\r\n\r\n'); // separates the body from the rest of the request.
     var headerStrings = separateBody[0].split('\r\n'); // separateBody[0] is the headers text plus the line request.
     var headers = {};
     var others = {};
     others['body'] = separateBody[1];
-    headerStrings.forEach(function(string){
+    headerStrings.forEach(function (string) {
         var stringParts = string.split(": ");
-        if(stringParts.length == 1 && stringParts != ""){
-            splitRequestLine(stringParts,others);
+        if (stringParts.length == 1) { // && stringParts != ""){ //this should give us request Line.
+            if (splitRequestLine(stringParts, others)) { //check for an error
+                //throw some error because the request line format isnt right.
+                // socket.emit(error);
+                console.log('something is wrong with the syntax');
+                // return ? (if not itll return only a {{body:"...", headers{....}}
+            }
         }
-        else if(stringParts.length == 2){
+        else if (stringParts.length == 2) { //headers
             headers[stringParts[0]] = stringParts[1];
         }
-        else{
+        else { // should exist?
             console.log("parsing function 'else' ?!?!?!");
         }
     });
@@ -251,24 +256,28 @@ function parseRequest(requestText){
     return others;
 }
 
-function splitRequestLine(requestLine, storage){
+//parseRequest helper.
+function splitRequestLine(requestLine, storage) {
     requestLine = requestLine[0].split(" ");
+    if (requestLine.length != 3) { // the request should be made of 3 parts [METHOD PATH HTTP/VERSION]
+        return 1; // something is wrong .
+    }
     storage["method"] = requestLine[0];
-    var URI = requestLine[1].split('?'); // -------------------> figure out if this name is okay.
-    var parameters = URI[0].split('/');
-    parameters.splice(0,1); // remove the first element (which is "")
-    var querySplit = URI[1].split('?');
-    var queryItems = {};
-    querySplit = querySplit[0].split('&');
-
-    querySplit.forEach(function (item)
-    {
-        var s = item.split('=');
-        queryItems[s[0]] = s[1];
-    });
-
-    storage["params"] = parameters;
-    storage["query"] = queryItems;
-    storage["path"] = URI[0];
     storage["protocol"] = requestLine[2].split('/')[0].toLowerCase();
+    var URI = requestLine[1];
+    storage["path"] = URI;
+    if (requestLine[1].indexOf('?') > -1) { // if its -1 means theres no '?'
+        URI = requestLine[1].split('?'); // -------------------> figure out if this name is okay.
+        var querySplit = URI[1].split('?');
+        var queryItems = {};
+        querySplit = querySplit[0].split('&');
+
+        querySplit.forEach(function (item) { // match a key to a value.
+            var s = item.split('=');
+            queryItems[s[0]] = s[1];
+        });
+        storage["query"] = queryItems;
+        storage["path"] = URI[0];
+    }
+    return 0;
 }
