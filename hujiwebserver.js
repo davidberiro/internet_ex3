@@ -3,30 +3,40 @@ const fs = require('fs');
 const httpCodes = require('./httpCodes');
 const DEFAULT_COMMAND = '/';
 
-// var socketRequest = clientsen(function (err, socketInput) {
-//     parseSocketRequest(socketRequest);
-// });
-// console.log('Hello!');
-
 var createParamsObject = function(command, matchingCommand) {
-    params = [];
-    
-
-}
+    var params = {};
+    var commandParams = command.split('/');
+    var matchingCommandParams = matchingCommand.split('/');
+    matchingCommandParams.forEach(function(param, index){
+        if(param[0] === ':'){
+            var key = param.slice(1);
+            // console.log(key);
+            params[key] = commandParams[index];
+        }
+    });
+    console.log(params);
+    return params;
+};
 
 var processCompleteHttpRequest = function (command, matchingCommand, parsedRequest) {
     //var obj = parseRequest(information);
     // -- now passed as parameter parsedRequest,
     //so that it can be used before to find the matching command in the socket.end event
     var body = null;
+    var headers = parsedRequest.headers;
     var params = createParamsObject(command, matchingCommand);
+    var query = {};
+    if (query in parsedRequest) {
+        query = parsedRequest.query;
+    }
 
     return {
         params: params
         ,
-        query: { // parsedRequest['query']
-
-        },
+        query: query
+        ,
+        headers: headers
+        ,
         body: function () {
             // Parse the body parsedRequestect.
             // TODO: fixed body to deal with ->("POST name=tobi&hobby=ass" should
@@ -49,9 +59,6 @@ var processCompleteHttpRequest = function (command, matchingCommand, parsedReque
                 body = parsedRequest.body
             }
             return body;
-        },
-        headers: { // parsedRequest['headers']
-
         },
         get: function (field) { // would check for "Content-Type"     //// used it in the is() function.
             if (field in this.headers) {
@@ -179,7 +186,6 @@ module.exports = {
             //socket end event
             socket.on("end", function () {
                 console.log('Ending connection at %s', socket.key);
-
                 //defining list of already called commands
                 var alreadyCalledCommands = [];
                 //creating object that defines parsed request, which is going to be passed on to
@@ -211,8 +217,6 @@ module.exports = {
                 allInformationSoFar += data;
                 console.log("received data");
             });
-
-
         });
 
         server.listen(port);
@@ -222,19 +226,15 @@ module.exports = {
                 server.close(); //(callback);??? ...stops accepting new connections.
                 clients.forEach(function (client) { // sockets already contains the socket that was added when the server was first created.
                     // var index = clients.indexOf(socket);
-
                     clients.splice(clients.indexOf(client), 1);
                     client.destroy();
                     // remove from the list .. but the list is changing .. dont know if this is a good idea.
                     // use ((delete clients[index] .. leaves an "undefined" instead of the element (doesnt change list)
                 });
-
             },
             port: port
         };
-
     }
-
 };
 
 /// functions that were added
