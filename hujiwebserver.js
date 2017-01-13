@@ -8,7 +8,7 @@ const DEFAULT_COMMAND = '/';
 // });
 // console.log('Hello!');
 
-var processCompleteHttpRequest = function (information, matchingCommand, parsedRequest) {
+var processCompleteHttpRequest = function (command, matchingCommand, parsedRequest) {
     //var obj = parseRequest(information);
     // -- now passed as parameter parsedRequest,
     //so that it can be used before to find the matching command in the socket.end event
@@ -132,6 +132,7 @@ var createEmptyResponse = function (socket) {
             responseMsg += "/r/n";
             responseMsg += body;
             socket.write(responseMsg);
+            socket.end();
             // TODO: CLose connection, end.
             return this;
         },
@@ -172,20 +173,23 @@ module.exports = {
             socket.on("end", function () {
                 console.log('Ending connection at %s', socket.key);
 
+                //defining list of already called commands
                 var alreadyCalledCommands = [];
+                //creating object that defines parsed request, which is going to be passed on to
+                //processCompleteHttpRequest, as well as giving us the command/path
                 var parsedRequest = parseRequest(allInformationSoFar);
                 var command = parsedRequest.path;
-                var commandMatch = chooseBestCommand(commands, alreadyCalledCommands, command);
-                // Create response containing all info
-                var req = processCompleteHttpRequest(allInformationSoFar, commandMatch);
-                var res = createEmptyResponse(socket); // Create an empty response parsedRequestect containing: send(), json(), etc., etc.
+                // Create response containing all info to be passed to middlewatr
+                var res = createEmptyResponse(socket);
 
-
+                //next function chooses and executes best middleware that we havent already called
                 var next = function () {
-                    commandAndMiddleware = chooseBestCommand();
+                    var commandAndMiddleware = chooseBestCommand(this.commands, alreadyCalledCommands, command);
                     alreadyCalledCommands.push(commandAndMiddleware.command);
+                    var req = processCompleteHttpRequest(command, commandAndMiddleware.command, parsedRequest);
                     commandAndMiddleware.middleware(req, res, next);
                 };
+                //calling next function with empty alreadyCalledCommands executes the middleware
                 next();
                 //socket.destroy();
             });
