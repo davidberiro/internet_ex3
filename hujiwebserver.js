@@ -8,16 +8,22 @@ const DEFAULT_COMMAND = '/';
 // });
 // console.log('Hello!');
 
+var createParamsObject = function(command, matchingCommand) {
+    params = [];
+    
+
+}
+
 var processCompleteHttpRequest = function (command, matchingCommand, parsedRequest) {
     //var obj = parseRequest(information);
     // -- now passed as parameter parsedRequest,
     //so that it can be used before to find the matching command in the socket.end event
     var body = null;
+    var params = createParamsObject(command, matchingCommand);
 
     return {
-        params: { // parsedRequest['params']
-
-        },
+        params: params
+        ,
         query: { // parsedRequest['query']
 
         },
