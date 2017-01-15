@@ -3,6 +3,8 @@ const fs = require('fs');
 const httpCodes = require('./httpCodes');
 const DEFAULT_COMMAND = '/';
 
+var next = function (){};
+
 var createParamsObject = function(command, matchingCommand) {
     var params = {};
     var commandParams = command.split('/');
@@ -140,10 +142,11 @@ var createEmptyResponse = function (socket) {
         },
         send: function (body) {
             // Send status, cookies, Content-TYpe, etc.
-            var responseMsg = this.htmlResponse.initialLine.status + " " + this.htmlResponse.initialLine.msg + "\r\n";
+            var responseMsg = "HTTP/1.0" + this.htmlResponse.initialLine.status + " " +
+                this.htmlResponse.initialLine.msg + "\r\n";
             for (var key in this.htmlResponse.headers) {
                 if (this.htmlResponse.headers.hasOwnProperty(key)) {
-                    responseMsg += key + ": " + this.htmlResponse.headers.key + "\r\n";
+                    responseMsg += key + ": " + this.htmlResponse.headers[key] + "\r\n";
                 }
             }
             responseMsg += "\r\n";
@@ -225,33 +228,6 @@ module.exports = {
 
             //socket end event
             socket.on("end", function () {
-            //     console.log('Ending connection at %s', socket.key);
-            //     //console.log(this);
-            //     //defining list of already called commands
-            //     var alreadyCalledCommands = [];
-            //     //creating object that defines parsed request, which is going to be passed on to
-            //     //processCompleteHttpRequest, as well as giving us the command/path
-            //     var parsedRequest = parseRequest(allInformationSoFar);
-            //     var command = parsedRequest.path;
-            //     console.log(command);
-            //     // Create response containing all info to be passed to middlewatr
-            //     var res = createEmptyResponse(socket);
-            //
-            //     //next function chooses and executes best middleware that we havent already called
-            //     var next = function () {
-            //         console.log(commands);
-            //         var commandAndMiddleware = chooseBestCommand(commands, alreadyCalledCommands, command);
-            //
-            //         // console.log(command);
-            //         // console.log(commandAndMiddleware);
-            //         alreadyCalledCommands.push(commandAndMiddleware.command);
-            //         var req = processCompleteHttpRequest(command, commandAndMiddleware.command, parsedRequest);
-            //         commandAndMiddleware.middleware(req, res, next);
-            //     };
-            //     //calling next function with empty alreadyCalledCommands executes the middleware
-            //     next();
-            //     //socket.destroy();
-            //     //console.log(this.commands);
             });
 
             //socket error event
@@ -266,32 +242,26 @@ module.exports = {
                 if (!(isCompleteHttpRequest(allInformationSoFar))) {
                     return;
                 }
-                //console.log(this);
-                //defining list of already called commands
+
+                console.log("finished receiving data");
                 var alreadyCalledCommands = [];
                 //creating object that defines parsed request, which is going to be passed on to
                 //processCompleteHttpRequest, as well as giving us the command/path
                 var parsedRequest = parseRequest(allInformationSoFar);
                 var command = parsedRequest.path;
-                console.log(command);
+                //console.log(command);
                 // Create response containing all info to be passed to middlewatr
                 var res = createEmptyResponse(socket);
 
                 //next function chooses and executes best middleware that we havent already called
                 var next = function () {
-                    console.log(commands);
+                    //console.log(commands);
                     var commandAndMiddleware = chooseBestCommand(commands, alreadyCalledCommands, command);
-
-                    // console.log(command);
-                    // console.log(commandAndMiddleware);
                     alreadyCalledCommands.push(commandAndMiddleware.command);
                     var req = processCompleteHttpRequest(command, commandAndMiddleware.command, parsedRequest);
                     commandAndMiddleware.middleware(req, res, next);
                 };
-                //calling next function with empty alreadyCalledCommands executes the middleware
                 next();
-                //socket.destroy();
-                //console.log(this.commands);
             });
         });
 
@@ -317,7 +287,31 @@ module.exports = {
 /// functions that were added
 
 var isCompleteHttpRequest = function (information) {
+    var firstBodySeparator = '\n\n';
+    var secondBodySeparator = '\r\n\r\n';
+    if(information.indexOf(firstBodySeparator) > -1){
+        return isBodyComplete(firstBodySeparator, information);
+    }
+    if(information.indexOf(secondBodySeparator) > -1){
+        return isBodyComplete(firstBodySeparator, information);
+    }
     //return true iff information is full http request
+    return false;
+};
+
+function isBodyComplete(separator, info){
+    var separatedInfo = info.split(separator);
+    if (separatedInfo[0].indexOf('Content-Length') > -1){
+        if(parseRequest(info).headers['content-length'] === byteCount(separatedInfo[1])){
+            return true;
+        }
+        return false;
+    }
+    return true;
+}
+
+function byteCount(s) {
+    return encodeURI(s).split(/%..|./).length - 1;
 }
 
 function parseRequest(requestText) {
