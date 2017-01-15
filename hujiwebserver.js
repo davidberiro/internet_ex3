@@ -3,14 +3,15 @@ const fs = require('fs');
 const httpCodes = require('./httpCodes');
 const DEFAULT_COMMAND = '/';
 
-var next = function (){};
+var next = function () {
+};
 
-var createParamsObject = function(command, matchingCommand) {
+var createParamsObject = function (command, matchingCommand) {
     var params = {};
     var commandParams = command.split('/');
     var matchingCommandParams = matchingCommand.split('/');
-    matchingCommandParams.forEach(function(param, index){
-        if(param[0] === ':'){
+    matchingCommandParams.forEach(function (param, index) {
+        if (param[0] === ':') {
             var key = param.slice(1);
             // console.log(key);
             params[key] = commandParams[index];
@@ -113,10 +114,6 @@ var parseParameters = function (paramsStr) {
 };
 
 var createEmptyResponse = function (socket) {
-    // var this.htmlResponseonse = {
-    //     initialLine: {},
-    //     headers: {}
-    // };
     return {
         htmlResponse: {
             initialLine: {},
@@ -137,12 +134,44 @@ var createEmptyResponse = function (socket) {
             this.htmlResponse.initialLine.msg = httpCodes[code];
             return this;
         },
-        cookie: function () {
+        cookie: function(name, value, options) { // should only support expires (if not specified or set to 0 creates session cookie)
+            var obj = {domain: 'localhost', path: "/"}; //secure: , signed: , maxAge: , httpOnly:, encode : encodeURIComponent,expires : 0
+            var cookieValueEncode = encodeURIComponent; // this is the default unless options has another one
+            // var objKeys = {};
+            var defaultTimeout = 9000; // 9 secounds --> this should be changed
+            // returnStr = name + '=' + value;
+            var objKeys = Object.keys(obj);
+            if (options) {
+                // optionsKeys = Object.keys(options);
+                // if(options.domain){
+                //     obj.domain = options.domain;
+                // }
+                // if(options.path){
+                //     obj.path = options.path;
+                // }
+                // if(options.encode){
+                //     cookieValueEncode = options.encode;
+                // }
+                if (options.expires) { // && options.expires != 0 /// only support expires.
+                    obj.expires = options.expires; //new Date(Date.now() + defaultTimeout);
+                }
+                objKeys = Object.keys(obj); // update obj.keys ..
 
+            }
+            returnStr = name + '=' + cookieValueEncode(value);
+            objKeys.forEach(function (key) {
+                var firstCharUpper = key.charAt(0).toUpperCase() + key.substr(1);
+                returnStr += '; ' + firstCharUpper + '=' + obj[key]; // + '; ' ;
+            });
+            console.log(returnStr);
+            return returnStr;
         },
         send: function (body) {
             // Send status, cookies, Content-TYpe, etc.
-            var responseMsg = "HTTP/1.0" + this.htmlResponse.initialLine.status + " " +
+            if (!body) {
+                body = "";
+            }
+            var responseMsg = "HTTP/1.0 " + this.htmlResponse.initialLine.status + " " +
                 this.htmlResponse.initialLine.msg + "\r\n";
             for (var key in this.htmlResponse.headers) {
                 if (this.htmlResponse.headers.hasOwnProperty(key)) {
@@ -155,7 +184,8 @@ var createEmptyResponse = function (socket) {
             console.log("response message:\r\n %s", responseMsg);
             socket.end(responseMsg);
             return this;
-        },
+        }
+        ,
         json: function (jsonResponse) {
             // TODO: Send headers with "Content-type: text/json" (something like that)
             this.send(JSON.stringify(jsonResponse));
@@ -164,27 +194,30 @@ var createEmptyResponse = function (socket) {
     };
 };
 
-var isCommandMatch = function(command, potentialCommandMatch) {
+var isCommandMatch = function (command, potentialCommandMatch) {
     if (potentialCommandMatch === DEFAULT_COMMAND) {
         return true;
     }
     console.log("command: %s\r\n", command);
     var matchSplit = potentialCommandMatch.split('/');
     var commandSplit = command.split('/');
-    //console.log(commandSplit);
-    // console.log(matchSplit);
+    console.log(commandSplit);
+    console.log(matchSplit);
     if (commandSplit.length < matchSplit.length) {
         return false;
     }
 
+    var retVal = true;
     matchSplit.forEach(function (parameter, index) {
-        if (!(parameter[0] === ':')) {
-            if (!(parameter === commandSplit[index])) {
-                return false;
+        if (parameter[0] != ':') {
+            //console.log(parameter);
+            if (parameter != commandSplit[index]) {
+                //console.log('returning false');
+                retVal = false;
             }
         }
     });
-    return true;
+    return retVal;
 }
 
 var chooseBestCommand = function (commands, alreadyCalledCommands, command) {
@@ -200,7 +233,11 @@ var chooseBestCommand = function (commands, alreadyCalledCommands, command) {
             }
         }
     }
-    console.log("no command match!!");
+    return {command: '/',
+        middleware: function(res, req){
+            req.status(404);
+            req.send();
+    }};
 }
 
 var clients = [];
@@ -219,7 +256,7 @@ module.exports = {
     start: function (port, callback) {
         console.log('Starting...');
         var commands = this.commands;
-        var server = net.createServer({allowHalfOpen:true}, function (socket) {
+        var server = net.createServer({allowHalfOpen: true}, function (socket) {
             //adding to clients
             socket.key = socket.remoteAddress + ":" + socket.remotePort;
             clients.push(socket);
@@ -252,6 +289,7 @@ module.exports = {
                 //console.log(command);
                 // Create response containing all info to be passed to middlewatr
                 var res = createEmptyResponse(socket);
+                console.log(commands);
 
                 //next function chooses and executes best middleware that we havent already called
                 var next = function () {
@@ -289,20 +327,20 @@ module.exports = {
 var isCompleteHttpRequest = function (information) {
     var firstBodySeparator = '\n\n';
     var secondBodySeparator = '\r\n\r\n';
-    if(information.indexOf(firstBodySeparator) > -1){
+    if (information.indexOf(firstBodySeparator) > -1) {
         return isBodyComplete(firstBodySeparator, information);
     }
-    if(information.indexOf(secondBodySeparator) > -1){
+    if (information.indexOf(secondBodySeparator) > -1) {
         return isBodyComplete(firstBodySeparator, information);
     }
     //return true iff information is full http request
     return false;
 };
 
-function isBodyComplete(separator, info){
+function isBodyComplete(separator, info) {
     var separatedInfo = info.split(separator);
-    if (separatedInfo[0].indexOf('Content-Length') > -1){
-        if(parseRequest(info).headers['content-length'] === byteCount(separatedInfo[1])){
+    if (separatedInfo[0].indexOf('Content-Length') > -1) {
+        if (parseRequest(info).headers['Content-Length'] === byteCount(separatedInfo[1])) {
             return true;
         }
         return false;

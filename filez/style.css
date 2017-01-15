@@ -1,0 +1,39 @@
+body {
+    font-size: 14px;
+	font-family: verdana;
+	
+	background: #ccfcda;
+
+}
+
+h1 {
+	font-style: italic;
+	font-size: 600%;
+	font-style: underline;
+	color: blue;
+	margin-bottom:20px;
+	margin-top:20px;
+}
+
+h2 {
+	text-decoration: underline;
+	color: #eabb3a;
+}
+
+.image-container {
+	float: left;
+	margin: 0, 20px, 20px, 0;
+}
+
+.image-container img {
+	padding-right: 30px;
+	height: 300px;
+	width: 400px;
+	
+}
+
+.image-container p {
+	font-size: 10px;
+	font-style: italic;
+	
+}

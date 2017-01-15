@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/hujiwebserver.js" line="20" />
+    <bookmark url="file://$PROJECT_DIR$/hujiwebserver.js" line="23" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="94948f0c-e61a-49e3-b6cf-42f34d0e796c" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hujiwebserver.js" afterPath="$PROJECT_DIR$/hujiwebserver.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.js" afterPath="$PROJECT_DIR$/main.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/request-parser.js" afterPath="$PROJECT_DIR$/request-parser.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test.js" afterPath="$PROJECT_DIR$/test.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -29,34 +29,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="hujiwebserver.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="hujiwebserver.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/hujiwebserver.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="147" column="49" lean-forward="false" selection-start-line="147" selection-start-column="49" selection-end-line="147" selection-end-column="49" />
+            <state relative-caret-position="233">
+              <caret line="170" column="17" lean-forward="false" selection-start-line="170" selection-start-column="17" selection-end-line="170" selection-end-column="17" />
               <folding>
-                <element signature="e#4128#4361#0" expanded="false" />
+                <element signature="e#216#617#0" expanded="false" />
+                <element signature="e#704#4122#0" expanded="false" />
+                <element signature="e#4168#4401#0" expanded="false" />
+                <element signature="e#7827#8527#0" expanded="false" />
+                <element signature="n#!!block;n#splitRequestLine#0" expanded="false" />
+                <marker date="1484511730909" expanded="false" signature="13620:15006" ph="{...}" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="httpCodes.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/httpCodes.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="request-parser.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/request-parser.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="52" selection-end-column="1" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -64,29 +49,21 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="8" column="21" lean-forward="false" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+            <state relative-caret-position="700">
+              <caret line="28" column="26" lean-forward="false" selection-start-line="25" selection-start-column="8" selection-end-line="28" selection-end-column="26" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="david-test.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/david-test.js">
+      <file leaf-file-name="test.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="client-example.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client-example.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="314">
+              <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#51#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -129,12 +106,23 @@
       <find>parseReque</find>
       <find>inform</find>
       <find>processCompleteHttpRequest</find>
-      <find>chooseBestCommand</find>
       <find>consol</find>
+      <find>cons</find>
+      <find>htmlResp</find>
+      <find>\n</find>
+      <find>length</find>
+      <find>content-type</find>
+      <find>return</find>
+      <find>chooseBestCommand</find>
+      <find>no com</find>
+      <find>afsasfasfa</find>
     </findStrings>
     <replaceStrings>
       <replace>clients</replace>
       <replace>parsedRequest</replace>
+      <replace>\r\n</replace>
+      <replace>this.htmlResponse</replace>
+      <replace>Content-Type</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -153,6 +141,7 @@
         <option value="$PROJECT_DIR$/request-parser.js" />
         <option value="$PROJECT_DIR$/main.js" />
         <option value="$PROJECT_DIR$/hujiwebserver.js" />
+        <option value="$PROJECT_DIR$/test.js" />
       </list>
     </option>
   </component>
@@ -184,7 +173,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -199,6 +187,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -208,18 +197,19 @@
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="restartRequiresConfirmation" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\David Benchimol\WebstormProjects\ex3" />
     </key>
   </component>
-  <component name="RunManager" selected="Node.js.server.js">
+  <component name="RunManager" selected="Node.js.test">
     <configuration default="false" name="helloworld.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="helloworld.js" working-dir="$PROJECT_DIR$">
       <method />
     </configuration>
     <configuration default="false" name="server.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="main.js" working-dir="$PROJECT_DIR$">
-      <browser name="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" url="http:://localhost:8080" />
+      <browser name="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" url="http:://localhost:80" />
       <profiling v8-profiler-path="" />
       <EXTENSION ID="com.jetbrains.nodejs.remote.docker.NodeJSDockerRunConfigurationExtension">
         <option name="envVars">
@@ -246,8 +236,11 @@
         <profiling v8-profiler-path="" />
       </EXTENSION>
       <EXTENSION ID="com.jetbrains.nodejs.run.NodeJSStartBrowserRunConfigurationExtension">
-        <browser name="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" url="http:://localhost:8080" />
+        <browser name="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" url="http:://localhost:80" />
       </EXTENSION>
+      <method />
+    </configuration>
+    <configuration default="false" name="hujiwebserver.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="hujiwebserver.js" working-dir="$PROJECT_DIR$">
       <method />
     </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
@@ -337,15 +330,46 @@
       </EXTENSION>
       <method />
     </configuration>
-    <list size="3">
+    <configuration default="false" name="test" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="project" path-to-js-file="test.js" working-dir="$PROJECT_DIR$">
+      <profiling v8-profiler-path="" />
+      <EXTENSION ID="com.jetbrains.nodejs.remote.docker.NodeJSDockerRunConfigurationExtension">
+        <option name="envVars">
+          <list />
+        </option>
+        <option name="extraHosts">
+          <list />
+        </option>
+        <option name="links">
+          <list />
+        </option>
+        <option name="networkDisabled" value="false" />
+        <option name="networkMode" value="bridge" />
+        <option name="portBindings">
+          <list />
+        </option>
+        <option name="publishAllPorts" value="false" />
+        <option name="version" value="1" />
+        <option name="volumeBindings">
+          <list />
+        </option>
+      </EXTENSION>
+      <EXTENSION ID="com.jetbrains.nodejs.run.NodeJSProfilingRunConfigurationExtension">
+        <profiling v8-profiler-path="" />
+      </EXTENSION>
+      <method />
+    </configuration>
+    <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Node.js.parser-test" />
-      <item index="1" class="java.lang.String" itemvalue="Node.js.helloworld.js" />
-      <item index="2" class="java.lang.String" itemvalue="Node.js.server.js" />
+      <item index="1" class="java.lang.String" itemvalue="Node.js.test" />
+      <item index="2" class="java.lang.String" itemvalue="Node.js.helloworld.js" />
+      <item index="3" class="java.lang.String" itemvalue="Node.js.server.js" />
+      <item index="4" class="java.lang.String" itemvalue="Node.js.hujiwebserver.js" />
     </list>
     <recent_temporary>
-      <list size="2">
+      <list size="3">
         <item index="0" class="java.lang.String" itemvalue="Node.js.server.js" />
-        <item index="1" class="java.lang.String" itemvalue="Node.js.helloworld.js" />
+        <item index="1" class="java.lang.String" itemvalue="Node.js.hujiwebserver.js" />
+        <item index="2" class="java.lang.String" itemvalue="Node.js.helloworld.js" />
       </list>
     </recent_temporary>
   </component>
@@ -370,26 +394,27 @@
       <workItem from="1484143210255" duration="2324000" />
       <workItem from="1484217194273" duration="2878000" />
       <workItem from="1484242058804" duration="17820000" />
-      <workItem from="1484486342741" duration="4066000" />
+      <workItem from="1484486342741" duration="6605000" />
+      <workItem from="1484496920910" duration="14479000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="61204000" />
+    <option name="totallyTimeSpent" value="78222000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-11" y="-11" width="1924" height="1042" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17916666" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1787592" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32305935" sideWeight="0.50210303" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40525115" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33904108" sideWeight="0.49789694" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39954337" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -417,7 +442,59 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#4128#4361#0" expanded="false" />
+            <element signature="e#216#617#0" expanded="false" />
+            <element signature="e#704#4122#0" expanded="false" />
+            <element signature="e#4168#4401#0" expanded="false" />
+            <element signature="e#7827#8527#0" expanded="false" />
+            <element signature="n#!!block;n#splitRequestLine#0" expanded="false" />
+            <marker date="1484511730909" expanded="false" signature="13620:15006" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/httpCodes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/request-parser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1350">
+          <caret line="54" column="28" lean-forward="false" selection-start-line="54" selection-start-column="28" selection-end-line="54" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server-example.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="3" column="10" lean-forward="false" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hujiwebserver.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#216#617#0" expanded="false" />
+            <element signature="e#704#4122#0" expanded="false" />
+            <element signature="e#4168#4401#0" expanded="false" />
+            <element signature="e#7827#8527#0" expanded="false" />
+            <element signature="n#!!block;n#splitRequestLine#0" expanded="false" />
+            <marker date="1484511730909" expanded="false" signature="13620:15006" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -458,7 +535,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -483,7 +559,12 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#4128#4361#0" expanded="false" />
+            <element signature="e#216#617#0" expanded="false" />
+            <element signature="e#704#4122#0" expanded="false" />
+            <element signature="e#4168#4401#0" expanded="false" />
+            <element signature="e#7827#8527#0" expanded="false" />
+            <element signature="n#!!block;n#splitRequestLine#0" expanded="false" />
+            <marker date="1484511730909" expanded="false" signature="13620:15006" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -524,7 +605,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -549,7 +629,12 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#4128#4361#0" expanded="false" />
+            <element signature="e#216#617#0" expanded="false" />
+            <element signature="e#704#4122#0" expanded="false" />
+            <element signature="e#4168#4401#0" expanded="false" />
+            <element signature="e#7827#8527#0" expanded="false" />
+            <element signature="n#!!block;n#splitRequestLine#0" expanded="false" />
+            <marker date="1484511730909" expanded="false" signature="13620:15006" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -582,7 +667,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -607,7 +691,12 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#4128#4361#0" expanded="false" />
+            <element signature="e#216#617#0" expanded="false" />
+            <element signature="e#704#4122#0" expanded="false" />
+            <element signature="e#4168#4401#0" expanded="false" />
+            <element signature="e#7827#8527#0" expanded="false" />
+            <element signature="n#!!block;n#splitRequestLine#0" expanded="false" />
+            <marker date="1484511730909" expanded="false" signature="13620:15006" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -617,7 +706,12 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#4128#4361#0" expanded="false" />
+            <element signature="e#216#617#0" expanded="false" />
+            <element signature="e#704#4122#0" expanded="false" />
+            <element signature="e#4168#4401#0" expanded="false" />
+            <element signature="e#7827#8527#0" expanded="false" />
+            <element signature="n#!!block;n#splitRequestLine#0" expanded="false" />
+            <marker date="1484511730909" expanded="false" signature="13620:15006" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -634,7 +728,12 @@
         <state relative-caret-position="100">
           <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding>
-            <element signature="e#4128#4361#0" expanded="false" />
+            <element signature="e#216#617#0" expanded="false" />
+            <element signature="e#704#4122#0" expanded="false" />
+            <element signature="e#4168#4401#0" expanded="false" />
+            <element signature="e#7827#8527#0" expanded="false" />
+            <element signature="n#!!block;n#splitRequestLine#0" expanded="false" />
+            <marker date="1484511730909" expanded="false" signature="13620:15006" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -662,10 +761,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server-example.js">
+    <entry file="file://$PROJECT_DIR$/david-test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="3" column="10" lean-forward="false" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="10" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -674,7 +773,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -686,26 +784,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/david-test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/request-parser.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="52" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="8" column="21" lean-forward="false" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+        <state relative-caret-position="50">
+          <caret line="2" column="41" lean-forward="true" selection-start-line="2" selection-start-column="41" selection-end-line="2" selection-end-column="41" />
           <folding />
         </state>
       </provider>
@@ -718,12 +800,43 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/server-example.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="3" column="10" lean-forward="false" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="700">
+          <caret line="28" column="26" lean-forward="false" selection-start-line="25" selection-start-column="8" selection-end-line="28" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/hujiwebserver.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="147" column="49" lean-forward="false" selection-start-line="147" selection-start-column="49" selection-end-line="147" selection-end-column="49" />
+        <state relative-caret-position="233">
+          <caret line="170" column="17" lean-forward="false" selection-start-line="170" selection-start-column="17" selection-end-line="170" selection-end-column="17" />
           <folding>
-            <element signature="e#4128#4361#0" expanded="false" />
+            <element signature="e#216#617#0" expanded="false" />
+            <element signature="e#704#4122#0" expanded="false" />
+            <element signature="e#4168#4401#0" expanded="false" />
+            <element signature="e#7827#8527#0" expanded="false" />
+            <element signature="n#!!block;n#splitRequestLine#0" expanded="false" />
+            <marker date="1484511730909" expanded="false" signature="13620:15006" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="314">
+          <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#51#0" expanded="false" />
           </folding>
         </state>
       </provider>

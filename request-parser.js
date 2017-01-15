@@ -52,7 +52,4 @@ function splitRequestLine(requestLine, storage) {
     return 0;
 }
 
-parseRequest('GET /abcd/a/c?a=b HTTP/1.1\r\nHost: localhost:8080\r\nConnection: keep-alive\r\nUpgrade-Insecure-Requests: 1\r\n' +
-    'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36\r\n' +
-    'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8\r\nAccept-Encoding: gzip, deflate, sdch, br\r\n' +
-    'Accept-Language: en-GB,en-US;q=0.8,en;q=0.6,ar;q=0.4\r\nCookie: Webstorm-4c6ae14b=1ec071ef-adcb-4127-9a79-c56503b99548; _ga=GA1.1.524307428.1483473798\r\n\r\n*******');
+parseRequest('GET /main.html HTTP/1.1\nHost: localhost\nUpgrade-Insecure-Requests: 1\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8\nDNT: 1\nAccept-Encoding: gzip, deflate, sdch, br\nAccept-Language: en-US,en;q=0.8,he;q=0.6\n');

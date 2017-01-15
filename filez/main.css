@@ -1,0 +1,27 @@
+body {
+	font-family: verdana;
+}
+
+h1 {
+	color: blue;
+    font-size: 600%;
+}
+
+.image-container {
+	float: left;
+	margin: 0 20px 20px 0;
+}
+
+.image-container img {
+	padding: 3px;
+	border: 1px solid #333333;
+}
+
+.image-container p {
+	font-size: 12px;
+	font-style: italic;
+}
+
+.bio {
+	
+}
