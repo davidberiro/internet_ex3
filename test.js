@@ -33,7 +33,12 @@ server.use('/hello/world', function(req, res) {
     else if (path.substr(path.length - 2) == 'js') {
         res.set('Content-Type', 'application/javascript'); //DEBUG ATTENTION - maybe add ; to end of text/html str
     }
+    else if (path.substr(path.length - 3) == 'img') {
+        res.set('Content-Type', 'application/javascript'); //DEBUG ATTENTION - maybe add ; to end of text/html str
+    }
     else {
+        res.status(404);
+        res.send();
         return;
     }
     var content = "";
@@ -44,6 +49,8 @@ server.use('/hello/world', function(req, res) {
         }
         content = data;
         res.status(200);
+        console.log("printing request object");
+        console.log(req);
         res.send(content);
     });
 }).start(8080, err);

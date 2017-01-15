@@ -3,8 +3,6 @@ const fs = require('fs');
 const httpCodes = require('./httpCodes');
 const DEFAULT_COMMAND = '/';
 
-var next = function () {
-};
 
 var createParamsObject = function (command, matchingCommand) {
     var params = {};
@@ -26,19 +24,30 @@ var processCompleteHttpRequest = function (command, matchingCommand, parsedReque
     // -- now passed as parameter parsedRequest,
     //so that it can be used before to find the matching command in the socket.end event
     var body = {};
+    var cookies = {};
     var headers = parsedRequest.headers;
     var params = createParamsObject(command, matchingCommand);
     var query = {};
     if (query in parsedRequest) {
         query = parsedRequest.query;
     }
+    if (headers['Cookie']) {
+        var cookieSplit = headers['Cookie'].split('=');
+        cookies[cookieSplit[0]] = cookieSplit[1];
+        // cookies.value = cookieSplit[1];
+    }
+    var path = parsedRequest['path'];
 
     return {
+        path: path
+        ,
         params: params
         ,
         query: query
         ,
         headers: headers
+        ,
+        cookies: cookies
         ,
         body: function () {
             // Parse the body parsedRequestect.
@@ -195,7 +204,7 @@ var createEmptyResponse = function (socket) {
 };
 
 var isCommandMatch = function (command, potentialCommandMatch) {
-    if (potentialCommandMatch === DEFAULT_COMMAND) {
+    if ((potentialCommandMatch === DEFAULT_COMMAND) || (command === DEFAULT_COMMAND)) {
         return true;
     }
     console.log("command: %s\r\n", command);
@@ -217,6 +226,7 @@ var isCommandMatch = function (command, potentialCommandMatch) {
             }
         }
     });
+    console.log(retVal);
     return retVal;
 }
 
@@ -257,7 +267,7 @@ module.exports = {
         console.log('Starting...');
         this.commands.push({command: '/favicon.ico', middleware: notFoundMiddleware});
         var commands = this.commands;
-        var server = net.createServer({allowHalfOpen: true}, function (socket) {
+        var server = net.createServer(function (socket) {
             //adding to clients
             socket.key = socket.remoteAddress + ":" + socket.remotePort;
             clients.push(socket);
@@ -305,7 +315,7 @@ module.exports = {
         });
 
         server.listen(port);
-        //callback()  ?
+        callback();
 
         return {
             stop: function () {
@@ -387,6 +397,9 @@ function parseRequest(requestText) {
             console.log("parsing function 'else' ?!?!?!");
         }
     });
+    if (headers.cookie) {
+        headers['cookies'] = cookieParser(headers.cookie);
+    }
     others["headers"] = headers;
     //console.log(others);
     return others;
@@ -417,3 +430,34 @@ function splitRequestLine(requestLine, storage) {
     }
     return 0;
 }
+
+function cookieParser(givenCookie) {
+    var cookieParams=[];
+    var params = {};
+    var subParams = {}; // everything besides the name and the value (the options in the res.cookie function)
+    if(givenCookie.indexOf('=') > (-1)){
+        var cookieNameAndValue = givenCookie.split('=');
+    }
+    else{
+        console.log("syntax error");
+        return 1;
+    }
+    if (givenCookie.indexOf('; ') > -1) { // if ; exists
+        cookieParams = givenCookie.split('; ');
+        cookieParams.forEach(function(param,index){
+            if(param.indexOf('=') > (-1) && index != 0){
+                var split = param.split('=');
+                subParams[split[0]] = split[1];
+            }
+            // else{
+            //     return; // skip this iteration
+            // }
+        });
+        cookieNameAndValue = cookieParams[0].split('=');
+    }
+    params.name = cookieNameAndValue[0];
+    params.value = cookieNameAndValue[1];
+    params.subParams = subParams;
+    return params;
+}
+// console.log(cookies({cookie:"aMD=BVKD; s=7"}));
