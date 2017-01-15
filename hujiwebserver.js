@@ -225,7 +225,47 @@ module.exports = {
 
             //socket end event
             socket.on("end", function () {
-                console.log('Ending connection at %s', socket.key);
+            //     console.log('Ending connection at %s', socket.key);
+            //     //console.log(this);
+            //     //defining list of already called commands
+            //     var alreadyCalledCommands = [];
+            //     //creating object that defines parsed request, which is going to be passed on to
+            //     //processCompleteHttpRequest, as well as giving us the command/path
+            //     var parsedRequest = parseRequest(allInformationSoFar);
+            //     var command = parsedRequest.path;
+            //     console.log(command);
+            //     // Create response containing all info to be passed to middlewatr
+            //     var res = createEmptyResponse(socket);
+            //
+            //     //next function chooses and executes best middleware that we havent already called
+            //     var next = function () {
+            //         console.log(commands);
+            //         var commandAndMiddleware = chooseBestCommand(commands, alreadyCalledCommands, command);
+            //
+            //         // console.log(command);
+            //         // console.log(commandAndMiddleware);
+            //         alreadyCalledCommands.push(commandAndMiddleware.command);
+            //         var req = processCompleteHttpRequest(command, commandAndMiddleware.command, parsedRequest);
+            //         commandAndMiddleware.middleware(req, res, next);
+            //     };
+            //     //calling next function with empty alreadyCalledCommands executes the middleware
+            //     next();
+            //     //socket.destroy();
+            //     //console.log(this.commands);
+            });
+
+            //socket error event
+            socket.on("error", function (err) {
+                callback('Error creating server: ' + err);
+            });
+
+            // More events for receiving data, whether HTTP request is over, etc.
+            socket.on("data", function (data) {
+                allInformationSoFar += data;
+                console.log("received data: \r\n %s", data);
+                if (!(isCompleteHttpRequest(allInformationSoFar))) {
+                    return;
+                }
                 //console.log(this);
                 //defining list of already called commands
                 var alreadyCalledCommands = [];
@@ -253,17 +293,6 @@ module.exports = {
                 //socket.destroy();
                 //console.log(this.commands);
             });
-
-            //socket error event
-            socket.on("error", function (err) {
-                callback('Error creating server: ' + err);
-            });
-
-            // More events for receiving data, whether HTTP request is over, etc.
-            socket.on("data", function (data) {
-                allInformationSoFar += data;
-                console.log("received data: \r\n %s", data);
-            });
         });
 
         server.listen(port);
@@ -286,6 +315,10 @@ module.exports = {
 };
 
 /// functions that were added
+
+var isCompleteHttpRequest = function (information) {
+    //return true iff information is full http request
+}
 
 function parseRequest(requestText) {
     var nextLine = '\r\n';
