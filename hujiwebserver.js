@@ -88,8 +88,8 @@ var processCompleteHttpRequest = function (command, matchingCommand, parsedReque
             var receivedType = this.get('Content-Type'); /////////// could be text/html; charset=utf-8
             receivedType = receivedType.split(';')[0]; // text/html
             receivedType = receivedType.split('/'); // ["text", "html"]
-            console.log(type);
-            console.log(receivedType);
+            // console.log(type);
+            // console.log(receivedType);
             /*     if type is(  'html'  or  'text/html'  or  'text/*')    */
             return (
                 type[0] === receivedType[1]
@@ -111,24 +111,28 @@ var parseParameters = function (paramsStr) {
 };
 
 var createEmptyResponse = function (socket) {
-    var htmlResponse = {
-        initialLine: {},
-        headers: {}
-    };
+    // var this.htmlResponseonse = {
+    //     initialLine: {},
+    //     headers: {}
+    // };
     return {
+        htmlResponse: {
+            initialLine: {},
+            headers: {}
+        },
         set: function (field, value) {
-            htmlResponse.headers[field] = value;
+            this.htmlResponse.headers[field] = value;
             return this;
         },
         get: function (field) {
-            return htmlResponse.headers[field];
+            return this.htmlResponse.headers[field];
         },
         status: function (code) {
             if (!(code in httpCodes)) {
                 throw new Error('Invalid status code');
             }
-            htmlResponse.initialLine.status = code;
-            htmlResponse.initialLine.msg = httpCodes[code];
+            this.htmlResponse.initialLine.status = code;
+            this.htmlResponse.initialLine.msg = httpCodes[code];
             return this;
         },
         cookie: function () {
@@ -136,16 +140,16 @@ var createEmptyResponse = function (socket) {
         },
         send: function (body) {
             // Send status, cookies, Content-TYpe, etc.
-            var responseMsg = htmlResponse.initialLine.status + " " + htmlResponse.initialLine.msg + "/r/n";
-            for (var key in htmlResponse.headers) {
-                if (htmlResponse.headers.hasOwnProperty(key)) {
-                    responseMsg += key + ": " + htmlResponse.headers.key + "/r/n";
+            var responseMsg = this.htmlResponse.initialLine.status + " " + this.htmlResponse.initialLine.msg + "\r\n";
+            for (var key in this.htmlResponse.headers) {
+                if (this.htmlResponse.headers.hasOwnProperty(key)) {
+                    responseMsg += key + ": " + this.htmlResponse.headers.key + "\r\n";
                 }
             }
-            responseMsg += "/r/n";
+            responseMsg += "\r\n";
             responseMsg += body;
             //socket.write(responseMsg);
-            console.log("response message: %s", responseMsg);
+            console.log("response message:\r\n %s", responseMsg);
             socket.end(responseMsg);
             return this;
         },
@@ -161,9 +165,10 @@ var isCommandMatch = function(command, potentialCommandMatch) {
     if (potentialCommandMatch === DEFAULT_COMMAND) {
         return true;
     }
+    console.log("command: %s\r\n", command);
     var matchSplit = potentialCommandMatch.split('/');
     var commandSplit = command.split('/');
-    // console.log(commandSplit);
+    //console.log(commandSplit);
     // console.log(matchSplit);
     if (commandSplit.length < matchSplit.length) {
         return false;
@@ -228,13 +233,15 @@ module.exports = {
                 //processCompleteHttpRequest, as well as giving us the command/path
                 var parsedRequest = parseRequest(allInformationSoFar);
                 var command = parsedRequest.path;
+                console.log(command);
                 // Create response containing all info to be passed to middlewatr
                 var res = createEmptyResponse(socket);
 
                 //next function chooses and executes best middleware that we havent already called
                 var next = function () {
+                    console.log(commands);
                     var commandAndMiddleware = chooseBestCommand(commands, alreadyCalledCommands, command);
-                    // console.log(commands);
+
                     // console.log(command);
                     // console.log(commandAndMiddleware);
                     alreadyCalledCommands.push(commandAndMiddleware.command);
@@ -255,7 +262,7 @@ module.exports = {
             // More events for receiving data, whether HTTP request is over, etc.
             socket.on("data", function (data) {
                 allInformationSoFar += data;
-                console.log("received data");
+                console.log("received data: \r\n %s", data);
             });
         });
 
@@ -265,13 +272,13 @@ module.exports = {
         return {
             stop: function () {
                 server.close(); //(callback);??? ...stops accepting new connections.
-                clients.forEach(function (client) { // sockets already contains the socket that was added when the server was first created.
-                    // var index = clients.indexOf(socket);
-                    clients.splice(clients.indexOf(client), 1);
-                    client.destroy();
-                    // remove from the list .. but the list is changing .. dont know if this is a good idea.
-                    // use ((delete clients[index] .. leaves an "undefined" instead of the element (doesnt change list)
-                });
+                // clients.forEach(function (client) { // sockets already contains the socket that was added when the server was first created.
+                //     // var index = clients.indexOf(socket);
+                //     clients.splice(clients.indexOf(client), 1);
+                //     client.destroy();
+                //     // remove from the list .. but the list is changing .. dont know if this is a good idea.
+                //     // use ((delete clients[index] .. leaves an "undefined" instead of the element (doesnt change list)
+                // });
             },
             port: port
         };
@@ -281,8 +288,14 @@ module.exports = {
 /// functions that were added
 
 function parseRequest(requestText) {
+    var nextLine = '\r\n';
+    var retardSplitBody = requestText.split('\n\n');
     var separateBody = requestText.split('\r\n\r\n'); // separates the body from the rest of the request.
-    var headerStrings = separateBody[0].split('\r\n'); // separateBody[0] is the headers text plus the line request.
+    if (retardSplitBody.length > separateBody.length) {
+        separateBody = retardSplitBody;
+        nextLine = '\n';
+    }
+    var headerStrings = separateBody[0].split(nextLine); // separateBody[0] is the headers text plus the line request.
     var headers = {};
     var others = {};
     others['body'] = separateBody[1];
@@ -304,7 +317,7 @@ function parseRequest(requestText) {
         }
     });
     others["headers"] = headers;
-    console.log(others);
+    //console.log(others);
     return others;
 }
 
