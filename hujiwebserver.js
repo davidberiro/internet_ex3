@@ -255,6 +255,7 @@ module.exports = {
     },
     start: function (port, callback) {
         console.log('Starting...');
+        this.commands.push({command: '/favicon.ico', middleware: notFoundMiddleware});
         var commands = this.commands;
         var server = net.createServer({allowHalfOpen: true}, function (socket) {
             //adding to clients
@@ -323,6 +324,11 @@ module.exports = {
 };
 
 /// functions that were added
+
+notFoundMiddleware = function(req, res) {
+    res.status(404);
+    res.send();
+}
 
 var isCompleteHttpRequest = function (information) {
     var firstBodySeparator = '\n\n';
