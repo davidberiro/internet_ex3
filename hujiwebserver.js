@@ -22,7 +22,7 @@ var processCompleteHttpRequest = function (command, matchingCommand, parsedReque
     //var obj = parseRequest(information);
     // -- now passed as parameter parsedRequest,
     //so that it can be used before to find the matching command in the socket.end event
-    var body = null;
+    var body = {};
     var headers = parsedRequest.headers;
     var params = createParamsObject(command, matchingCommand);
     var query = {};
@@ -144,9 +144,9 @@ var createEmptyResponse = function (socket) {
             }
             responseMsg += "/r/n";
             responseMsg += body;
-            socket.write(responseMsg);
-            socket.end();
-            // TODO: CLose connection, end.
+            //socket.write(responseMsg);
+            console.log("response message: %s", responseMsg);
+            socket.end(responseMsg);
             return this;
         },
         json: function (jsonResponse) {
@@ -157,9 +157,42 @@ var createEmptyResponse = function (socket) {
     };
 };
 
+var isCommandMatch = function(command, potentialCommandMatch) {
+    if (potentialCommandMatch === DEFAULT_COMMAND) {
+        return true;
+    }
+    var matchSplit = potentialCommandMatch.split('/');
+    var commandSplit = command.split('/');
+    // console.log(commandSplit);
+    // console.log(matchSplit);
+    if (commandSplit.length < matchSplit.length) {
+        return false;
+    }
+
+    matchSplit.forEach(function (parameter, index) {
+        if (!(parameter[0] === ':')) {
+            if (!(parameter === commandSplit[index])) {
+                return false;
+            }
+        }
+    });
+    return true;
+}
+
 var chooseBestCommand = function (commands, alreadyCalledCommands, command) {
     //iterates over commands, if its not in already calledcommands checks if its
     //a match, and if so returns {command, middleware}
+    var cmd;
+    for (var i = 0; i < commands.length; i++) {
+        var commandAndMiddleware = commands[i];
+        cmd = commandAndMiddleware.command;
+        if (!(cmd in alreadyCalledCommands)) {
+            if (isCommandMatch(command, cmd)) {
+                return commandAndMiddleware;
+            }
+        }
+    }
+    console.log("no command match!!");
 }
 
 var clients = [];
@@ -177,15 +210,18 @@ module.exports = {
     },
     start: function (port, callback) {
         console.log('Starting...');
-        var server = net.createServer(function (socket) {
+        var commands = this.commands;
+        var server = net.createServer({allowHalfOpen:true}, function (socket) {
             //adding to clients
             socket.key = socket.remoteAddress + ":" + socket.remotePort;
             clients.push(socket);
             var allInformationSoFar = '';
+            console.log('Starting connection at %s', socket.key);
 
             //socket end event
             socket.on("end", function () {
                 console.log('Ending connection at %s', socket.key);
+                //console.log(this);
                 //defining list of already called commands
                 var alreadyCalledCommands = [];
                 //creating object that defines parsed request, which is going to be passed on to
@@ -197,7 +233,10 @@ module.exports = {
 
                 //next function chooses and executes best middleware that we havent already called
                 var next = function () {
-                    var commandAndMiddleware = chooseBestCommand(this.commands, alreadyCalledCommands, command);
+                    var commandAndMiddleware = chooseBestCommand(commands, alreadyCalledCommands, command);
+                    // console.log(commands);
+                    // console.log(command);
+                    // console.log(commandAndMiddleware);
                     alreadyCalledCommands.push(commandAndMiddleware.command);
                     var req = processCompleteHttpRequest(command, commandAndMiddleware.command, parsedRequest);
                     commandAndMiddleware.middleware(req, res, next);
@@ -205,6 +244,7 @@ module.exports = {
                 //calling next function with empty alreadyCalledCommands executes the middleware
                 next();
                 //socket.destroy();
+                //console.log(this.commands);
             });
 
             //socket error event
@@ -220,6 +260,7 @@ module.exports = {
         });
 
         server.listen(port);
+        //callback()  ?
 
         return {
             stop: function () {

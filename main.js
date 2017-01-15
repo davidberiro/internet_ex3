@@ -1,6 +1,13 @@
 // minimal usage main.js:
 var server = require('./hujiwebserver');
 
+var err = function (err) {
+    console.log("erorrrrrr" + err);
+}
+
 server.use('/add/:a/:b', function (req, res, next) {
-    res.send('<h1>' + (--req.params.a + --res.params.b) + '</h1>');
-}).start(80);
+    res.status("200");
+    res.send(req.params.a + req.params.b);
+}).start(80, err);
+
+
