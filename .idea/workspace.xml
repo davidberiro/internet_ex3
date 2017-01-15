@@ -33,24 +33,36 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="hujiwebserver.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="hujiwebserver.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/hujiwebserver.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="62">
-              <caret line="23" column="48" lean-forward="true" selection-start-line="23" selection-start-column="48" selection-end-line="23" selection-end-column="48" />
+            <state relative-caret-position="497">
+              <caret line="370" column="19" lean-forward="true" selection-start-line="370" selection-start-column="19" selection-end-line="370" selection-end-column="19" />
               <folding>
                 <element signature="e#188#589#0" expanded="false" />
+                <element signature="e#676#4402#0" expanded="false" />
                 <element signature="e#4448#4681#0" expanded="false" />
+                <element signature="e#4728#8041#0" expanded="false" />
+                <element signature="e#8107#8867#0" expanded="false" />
+                <element signature="e#8945#9534#0" expanded="false" />
+                <element signature="e#9572#13087#0" expanded="false" />
+                <element signature="e#13161#13201#0" expanded="false" />
+                <element signature="e#13254#13662#0" expanded="false" />
+                <element signature="n#!!block;n#isBodyComplete#0" expanded="false" />
+                <element signature="n#!!block;n#byteCount#0" expanded="false" />
+                <element signature="n#!!block;n#parseRequest#0" expanded="false" />
+                <element signature="n#!!block;n#splitRequestLine#0" expanded="false" />
+                <element signature="n#!!block;n#cookieParser#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="test.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1091">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="1075">
+              <caret line="55" column="20" lean-forward="true" selection-start-line="55" selection-start-column="20" selection-end-line="55" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -78,7 +90,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>&quot;</find>
       <find>closed</find>
       <find>socke</find>
       <find>connectionKey</find>
@@ -106,8 +117,9 @@
       <find>single_server_test</find>
       <find>testing the cookie</find>
       <find>this.comm</find>
-      <find>cookies</find>
       <find>test/cookie</find>
+      <find>cookies</find>
+      <find>#</find>
     </findStrings>
     <replaceStrings>
       <replace>others</replace>
@@ -196,40 +208,8 @@
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
   </component>
-  <component name="RunManager" selected="Node.js.cookieTest.js">
+  <component name="RunManager" selected="Node.js.test.js">
     <configuration default="false" name="functions try.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="try.js" working-dir="$PROJECT_DIR$">
-      <browser name="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" start="true" url="http://localhost:8080" />
-      <profiling v8-profiler-path="" />
-      <EXTENSION ID="com.jetbrains.nodejs.remote.docker.NodeJSDockerRunConfigurationExtension">
-        <option name="envVars">
-          <list />
-        </option>
-        <option name="extraHosts">
-          <list />
-        </option>
-        <option name="links">
-          <list />
-        </option>
-        <option name="networkDisabled" value="false" />
-        <option name="networkMode" value="bridge" />
-        <option name="portBindings">
-          <list />
-        </option>
-        <option name="publishAllPorts" value="false" />
-        <option name="version" value="1" />
-        <option name="volumeBindings">
-          <list />
-        </option>
-      </EXTENSION>
-      <EXTENSION ID="com.jetbrains.nodejs.run.NodeJSProfilingRunConfigurationExtension">
-        <profiling v8-profiler-path="" />
-      </EXTENSION>
-      <EXTENSION ID="com.jetbrains.nodejs.run.NodeJSStartBrowserRunConfigurationExtension">
-        <browser name="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" start="true" url="http://localhost:8080" />
-      </EXTENSION>
-      <method />
-    </configuration>
-    <configuration default="false" name="functions try.js (1)" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="functions try.js" working-dir="$PROJECT_DIR$/../WebstormProjects/internet_ex3-master">
       <browser name="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" start="true" url="http://localhost:8080" />
       <profiling v8-profiler-path="" />
       <EXTENSION ID="com.jetbrains.nodejs.remote.docker.NodeJSDockerRunConfigurationExtension">
@@ -326,6 +306,38 @@
       <method />
     </configuration>
     <configuration default="false" name="request-parser.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="request-parser.js" working-dir="$PROJECT_DIR$">
+      <browser name="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" start="true" url="http://localhost:8080" />
+      <profiling v8-profiler-path="" />
+      <EXTENSION ID="com.jetbrains.nodejs.remote.docker.NodeJSDockerRunConfigurationExtension">
+        <option name="envVars">
+          <list />
+        </option>
+        <option name="extraHosts">
+          <list />
+        </option>
+        <option name="links">
+          <list />
+        </option>
+        <option name="networkDisabled" value="false" />
+        <option name="networkMode" value="bridge" />
+        <option name="portBindings">
+          <list />
+        </option>
+        <option name="publishAllPorts" value="false" />
+        <option name="version" value="1" />
+        <option name="volumeBindings">
+          <list />
+        </option>
+      </EXTENSION>
+      <EXTENSION ID="com.jetbrains.nodejs.run.NodeJSProfilingRunConfigurationExtension">
+        <profiling v8-profiler-path="" />
+      </EXTENSION>
+      <EXTENSION ID="com.jetbrains.nodejs.run.NodeJSStartBrowserRunConfigurationExtension">
+        <browser name="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" start="true" url="http://localhost:8080" />
+      </EXTENSION>
+      <method />
+    </configuration>
+    <configuration default="false" name="test.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="test.js" working-dir="$PROJECT_DIR$">
       <browser name="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" start="true" url="http://localhost:8080" />
       <profiling v8-profiler-path="" />
       <EXTENSION ID="com.jetbrains.nodejs.remote.docker.NodeJSDockerRunConfigurationExtension">
@@ -491,18 +503,18 @@
       <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.app.js JavaScript" />
       <item index="1" class="java.lang.String" itemvalue="Node.js.hujiwebserver.js" />
       <item index="2" class="java.lang.String" itemvalue="Node.js.functions try.js" />
-      <item index="3" class="java.lang.String" itemvalue="Node.js.functions try.js (1)" />
-      <item index="4" class="java.lang.String" itemvalue="Node.js.main.js" />
-      <item index="5" class="java.lang.String" itemvalue="Node.js.cookieTest.js" />
-      <item index="6" class="java.lang.String" itemvalue="Node.js.request-parser.js" />
+      <item index="3" class="java.lang.String" itemvalue="Node.js.main.js" />
+      <item index="4" class="java.lang.String" itemvalue="Node.js.cookieTest.js" />
+      <item index="5" class="java.lang.String" itemvalue="Node.js.request-parser.js" />
+      <item index="6" class="java.lang.String" itemvalue="Node.js.test.js" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Node.js.cookieTest.js" />
-        <item index="1" class="java.lang.String" itemvalue="Node.js.request-parser.js" />
-        <item index="2" class="java.lang.String" itemvalue="Node.js.functions try.js" />
-        <item index="3" class="java.lang.String" itemvalue="Node.js.main.js" />
-        <item index="4" class="java.lang.String" itemvalue="Node.js.functions try.js (1)" />
+        <item index="0" class="java.lang.String" itemvalue="Node.js.test.js" />
+        <item index="1" class="java.lang.String" itemvalue="Node.js.cookieTest.js" />
+        <item index="2" class="java.lang.String" itemvalue="Node.js.request-parser.js" />
+        <item index="3" class="java.lang.String" itemvalue="Node.js.functions try.js" />
+        <item index="4" class="java.lang.String" itemvalue="Node.js.main.js" />
       </list>
     </recent_temporary>
   </component>
@@ -534,12 +546,12 @@
       <workItem from="1484486907085" duration="1542000" />
       <workItem from="1484488526131" duration="2036000" />
       <workItem from="1484504459325" duration="8407000" />
-      <workItem from="1484516812151" duration="3456000" />
+      <workItem from="1484516812151" duration="4509000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="135111000" />
+    <option name="totallyTimeSpent" value="136164000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
@@ -549,7 +561,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4357224" sideWeight="0.50416666" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4357224" sideWeight="0.49583334" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4357224" sideWeight="0.49583334" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -583,7 +595,7 @@
           <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="18" />
+      <option name="time" value="19" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -623,7 +635,19 @@
           <caret line="52" column="91" lean-forward="false" selection-start-line="52" selection-start-column="91" selection-end-line="52" selection-end-column="91" />
           <folding>
             <element signature="e#188#589#0" expanded="false" />
+            <element signature="e#676#4402#0" expanded="false" />
             <element signature="e#4448#4681#0" expanded="false" />
+            <element signature="e#4728#8041#0" expanded="false" />
+            <element signature="e#8107#8867#0" expanded="false" />
+            <element signature="e#8945#9534#0" expanded="false" />
+            <element signature="e#9572#13087#0" expanded="false" />
+            <element signature="e#13161#13201#0" expanded="false" />
+            <element signature="e#13254#13662#0" expanded="false" />
+            <element signature="n#!!block;n#isBodyComplete#0" expanded="false" />
+            <element signature="n#!!block;n#byteCount#0" expanded="false" />
+            <element signature="n#!!block;n#parseRequest#0" expanded="false" />
+            <element signature="n#!!block;n#splitRequestLine#0" expanded="false" />
+            <element signature="n#!!block;n#cookieParser#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -641,7 +665,19 @@
           <caret line="21" column="57" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="88" selection-end-column="1" />
           <folding>
             <element signature="e#188#589#0" expanded="false" />
+            <element signature="e#676#4402#0" expanded="false" />
             <element signature="e#4448#4681#0" expanded="false" />
+            <element signature="e#4728#8041#0" expanded="false" />
+            <element signature="e#8107#8867#0" expanded="false" />
+            <element signature="e#8945#9534#0" expanded="false" />
+            <element signature="e#9572#13087#0" expanded="false" />
+            <element signature="e#13161#13201#0" expanded="false" />
+            <element signature="e#13254#13662#0" expanded="false" />
+            <element signature="n#!!block;n#isBodyComplete#0" expanded="false" />
+            <element signature="n#!!block;n#byteCount#0" expanded="false" />
+            <element signature="n#!!block;n#parseRequest#0" expanded="false" />
+            <element signature="n#!!block;n#splitRequestLine#0" expanded="false" />
+            <element signature="n#!!block;n#cookieParser#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -681,7 +717,19 @@
           <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="3" selection-end-line="18" selection-end-column="11" />
           <folding>
             <element signature="e#188#589#0" expanded="false" />
+            <element signature="e#676#4402#0" expanded="false" />
             <element signature="e#4448#4681#0" expanded="false" />
+            <element signature="e#4728#8041#0" expanded="false" />
+            <element signature="e#8107#8867#0" expanded="false" />
+            <element signature="e#8945#9534#0" expanded="false" />
+            <element signature="e#9572#13087#0" expanded="false" />
+            <element signature="e#13161#13201#0" expanded="false" />
+            <element signature="e#13254#13662#0" expanded="false" />
+            <element signature="n#!!block;n#isBodyComplete#0" expanded="false" />
+            <element signature="n#!!block;n#byteCount#0" expanded="false" />
+            <element signature="n#!!block;n#parseRequest#0" expanded="false" />
+            <element signature="n#!!block;n#splitRequestLine#0" expanded="false" />
+            <element signature="n#!!block;n#cookieParser#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -702,7 +750,19 @@
           <caret line="22" column="3" lean-forward="false" selection-start-line="22" selection-start-column="3" selection-end-line="22" selection-end-column="3" />
           <folding>
             <element signature="e#188#589#0" expanded="false" />
+            <element signature="e#676#4402#0" expanded="false" />
             <element signature="e#4448#4681#0" expanded="false" />
+            <element signature="e#4728#8041#0" expanded="false" />
+            <element signature="e#8107#8867#0" expanded="false" />
+            <element signature="e#8945#9534#0" expanded="false" />
+            <element signature="e#9572#13087#0" expanded="false" />
+            <element signature="e#13161#13201#0" expanded="false" />
+            <element signature="e#13254#13662#0" expanded="false" />
+            <element signature="n#!!block;n#isBodyComplete#0" expanded="false" />
+            <element signature="n#!!block;n#byteCount#0" expanded="false" />
+            <element signature="n#!!block;n#parseRequest#0" expanded="false" />
+            <element signature="n#!!block;n#splitRequestLine#0" expanded="false" />
+            <element signature="n#!!block;n#cookieParser#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -723,7 +783,19 @@
           <caret line="16" column="15" lean-forward="true" selection-start-line="16" selection-start-column="15" selection-end-line="16" selection-end-column="15" />
           <folding>
             <element signature="e#188#589#0" expanded="false" />
+            <element signature="e#676#4402#0" expanded="false" />
             <element signature="e#4448#4681#0" expanded="false" />
+            <element signature="e#4728#8041#0" expanded="false" />
+            <element signature="e#8107#8867#0" expanded="false" />
+            <element signature="e#8945#9534#0" expanded="false" />
+            <element signature="e#9572#13087#0" expanded="false" />
+            <element signature="e#13161#13201#0" expanded="false" />
+            <element signature="e#13254#13662#0" expanded="false" />
+            <element signature="n#!!block;n#isBodyComplete#0" expanded="false" />
+            <element signature="n#!!block;n#byteCount#0" expanded="false" />
+            <element signature="n#!!block;n#parseRequest#0" expanded="false" />
+            <element signature="n#!!block;n#splitRequestLine#0" expanded="false" />
+            <element signature="n#!!block;n#cookieParser#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -759,7 +831,19 @@
           <caret line="68" column="30" lean-forward="true" selection-start-line="68" selection-start-column="30" selection-end-line="68" selection-end-column="30" />
           <folding>
             <element signature="e#188#589#0" expanded="false" />
+            <element signature="e#676#4402#0" expanded="false" />
             <element signature="e#4448#4681#0" expanded="false" />
+            <element signature="e#4728#8041#0" expanded="false" />
+            <element signature="e#8107#8867#0" expanded="false" />
+            <element signature="e#8945#9534#0" expanded="false" />
+            <element signature="e#9572#13087#0" expanded="false" />
+            <element signature="e#13161#13201#0" expanded="false" />
+            <element signature="e#13254#13662#0" expanded="false" />
+            <element signature="n#!!block;n#isBodyComplete#0" expanded="false" />
+            <element signature="n#!!block;n#byteCount#0" expanded="false" />
+            <element signature="n#!!block;n#parseRequest#0" expanded="false" />
+            <element signature="n#!!block;n#splitRequestLine#0" expanded="false" />
+            <element signature="n#!!block;n#cookieParser#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -815,17 +899,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hujiwebserver.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="62">
-          <caret line="23" column="48" lean-forward="true" selection-start-line="23" selection-start-column="48" selection-end-line="23" selection-end-column="48" />
-          <folding>
-            <element signature="e#188#589#0" expanded="false" />
-            <element signature="e#4448#4681#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cookieTest.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="113">
@@ -838,9 +911,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1091">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="1075">
+          <caret line="55" column="20" lean-forward="true" selection-start-line="55" selection-start-column="20" selection-end-line="55" selection-end-column="20" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hujiwebserver.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="497">
+          <caret line="370" column="19" lean-forward="true" selection-start-line="370" selection-start-column="19" selection-end-line="370" selection-end-column="19" />
+          <folding>
+            <element signature="e#188#589#0" expanded="false" />
+            <element signature="e#676#4402#0" expanded="false" />
+            <element signature="e#4448#4681#0" expanded="false" />
+            <element signature="e#4728#8041#0" expanded="false" />
+            <element signature="e#8107#8867#0" expanded="false" />
+            <element signature="e#8945#9534#0" expanded="false" />
+            <element signature="e#9572#13087#0" expanded="false" />
+            <element signature="e#13161#13201#0" expanded="false" />
+            <element signature="e#13254#13662#0" expanded="false" />
+            <element signature="n#!!block;n#isBodyComplete#0" expanded="false" />
+            <element signature="n#!!block;n#byteCount#0" expanded="false" />
+            <element signature="n#!!block;n#parseRequest#0" expanded="false" />
+            <element signature="n#!!block;n#splitRequestLine#0" expanded="false" />
+            <element signature="n#!!block;n#cookieParser#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
