@@ -88,8 +88,6 @@ var processCompleteHttpRequest = function (command, matchingCommand, parsedReque
             var receivedType = this.get('Content-Type'); /////////// could be text/html; charset=utf-8
             receivedType = receivedType.split(';')[0]; // text/html
             receivedType = receivedType.split('/'); // ["text", "html"]
-            // console.log(type);
-            // console.log(receivedType);
             /*     if type is(  'html'  or  'text/html'  or  'text/*')    */
             return (
                 type[0] === receivedType[1]
@@ -227,8 +225,8 @@ var chooseBestCommand = function (commands, alreadyCalledCommands, command) {
     //iterates over commands, if its not in already calledcommands checks if its
     //a match, and if so returns {command, middleware}
     var cmd;
-    console.log("printing already called commands list");
-    console.log(alreadyCalledCommands);
+    // console.log("printing already called commands list");
+    // console.log(alreadyCalledCommands);
     for (var i = 0; i < commands.length; i++) {
         // console.log(i);
         // console.log(commands.length);
@@ -270,24 +268,16 @@ module.exports = {
             clients.push(socket);
             var allInformationSoFar = '';
             console.log('Starting connection at %s', socket.key);
-
-            //socket end event
-            socket.on("end", function () {
-            });
-
             //socket error event
             socket.on("error", function (err) {
                 callback('Error creating server: ' + err);
             });
-
-            // More events for receiving data, whether HTTP request is over, etc.
             socket.on("data", function (data) {
                 allInformationSoFar += data;
-                console.log("received data: \r\n %s", data);
+                //console.log("received data: \r\n %s", data);
                 if (!(isCompleteHttpRequest(allInformationSoFar))) {
                     return;
                 }
-
                 console.log("finished receiving data");
                 //already called commands is empty array
                  var alreadyCalledCommands = [];
@@ -295,19 +285,13 @@ module.exports = {
                 //processCompleteHttpRequest, as well as giving us the command/path
                 var parsedRequest = parseRequest(allInformationSoFar);
                 var command = parsedRequest.path;
-                //console.log(command);
                 // Create response containing all info to be passed to middlewatr
                 var res = createEmptyResponse(socket);
-                //console.log(commands);
-
                 //next function chooses and executes best middleware that we havent already called
                 var next = function () {
-                    //console.log(commands);
                     var commandAndMiddleware = chooseBestCommand(commands, alreadyCalledCommands, command);
                     alreadyCalledCommands.push(commandAndMiddleware.command);
                     var req = processCompleteHttpRequest(command, commandAndMiddleware.command, parsedRequest);
-                    console.log('printing request object');
-                    console.log(req);
                     commandAndMiddleware.middleware(req, res, next);
                 };
                 next();
@@ -319,14 +303,7 @@ module.exports = {
 
         return {
             stop: function () {
-                server.close(); //(callback);??? ...stops accepting new connections.
-                // clients.forEach(function (client) { // sockets already contains the socket that was added when the server was first created.
-                //     // var index = clients.indexOf(socket);
-                //     clients.splice(clients.indexOf(client), 1);
-                //     client.destroy();
-                //     // remove from the list .. but the list is changing .. dont know if this is a good idea.
-                //     // use ((delete clients[index] .. leaves an "undefined" instead of the element (doesnt change list)
-                // });
+                server.close();
             },
             port: port
         };
@@ -335,7 +312,7 @@ module.exports = {
 
 /// functions that were added
 
-notFoundMiddleware = function(req, res) {
+var notFoundMiddleware = function(req, res) {
     res.status(404);
     res.send();
 }
