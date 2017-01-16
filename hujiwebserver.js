@@ -15,7 +15,7 @@ var createParamsObject = function (command, matchingCommand) {
             params[key] = commandParams[index];
         }
     });
-    console.log(params);
+    //console.log(params);
     return params;
 };
 
@@ -28,7 +28,7 @@ var processCompleteHttpRequest = function (command, matchingCommand, parsedReque
     var headers = parsedRequest.headers;
     var params = createParamsObject(command, matchingCommand);
     var query = {};
-    if (query in parsedRequest) {
+    if (parsedRequest.query) {
         query = parsedRequest.query;
     }
     if (headers['Cookie']) {
@@ -210,8 +210,8 @@ var isCommandMatch = function (command, potentialCommandMatch) {
     console.log("command: %s\r\n", command);
     var matchSplit = potentialCommandMatch.split('/');
     var commandSplit = command.split('/');
-    console.log(commandSplit);
-    console.log(matchSplit);
+    // console.log(commandSplit);
+    // console.log(matchSplit);
     if (commandSplit.length < matchSplit.length) {
         return false;
     }
@@ -234,10 +234,14 @@ var chooseBestCommand = function (commands, alreadyCalledCommands, command) {
     //iterates over commands, if its not in already calledcommands checks if its
     //a match, and if so returns {command, middleware}
     var cmd;
+    console.log("printing already called commands list");
+    console.log(alreadyCalledCommands);
     for (var i = 0; i < commands.length; i++) {
+        // console.log(i);
+        // console.log(commands.length);
         var commandAndMiddleware = commands[i];
         cmd = commandAndMiddleware.command;
-        if (!(cmd in alreadyCalledCommands)) {
+        if (alreadyCalledCommands.indexOf(cmd) == -1) {
             if (isCommandMatch(command, cmd)) {
                 return commandAndMiddleware;
             }
@@ -292,7 +296,8 @@ module.exports = {
                 }
 
                 console.log("finished receiving data");
-                var alreadyCalledCommands = [];
+                //already called commands is empty array
+                 var alreadyCalledCommands = [];
                 //creating object that defines parsed request, which is going to be passed on to
                 //processCompleteHttpRequest, as well as giving us the command/path
                 var parsedRequest = parseRequest(allInformationSoFar);
@@ -300,7 +305,7 @@ module.exports = {
                 //console.log(command);
                 // Create response containing all info to be passed to middlewatr
                 var res = createEmptyResponse(socket);
-                console.log(commands);
+                //console.log(commands);
 
                 //next function chooses and executes best middleware that we havent already called
                 var next = function () {
@@ -423,7 +428,7 @@ function splitRequestLine(requestLine, storage) {
 
         querySplit.forEach(function (item) { // match a key to a value.
             var s = item.split('=');
-            queryItems[s[0]] = s[1];
+            queryItems[s[0]] = s[1].replace('+', ' ');
         });
         storage["query"] = queryItems;
         storage["path"] = URI[0];
