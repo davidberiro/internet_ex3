@@ -23,13 +23,18 @@ var processCompleteHttpRequest = function (command, matchingCommand, parsedReque
     //var obj = parseRequest(information);
     // -- now passed as parameter parsedRequest,
     //so that it can be used before to find the matching command in the socket.end event
-    var body = {};
+    var body = createBody(parsedRequest);
     var cookies = {};
+    var host = {};
     var headers = parsedRequest.headers;
     var params = createParamsObject(command, matchingCommand);
     var query = {};
+    var protocol = 'http';
     if (parsedRequest.query) {
         query = parsedRequest.query;
+    }
+    if (headers['Host']) {
+        host = headers['Host'];
     }
     if (headers['Cookie']) {
         var cookieSplit = headers['Cookie'].split('=');
@@ -41,6 +46,10 @@ var processCompleteHttpRequest = function (command, matchingCommand, parsedReque
     return {
         path: path
         ,
+        protocol: protocol
+        ,
+        host: host
+        ,
         params: params
         ,
         query: query
@@ -49,29 +58,8 @@ var processCompleteHttpRequest = function (command, matchingCommand, parsedReque
         ,
         cookies: cookies
         ,
-        body: function () {
-            // Parse the body parsedRequestect.
-            // TODO: fixed body to deal with ->("POST name=tobi&hobby=ass" should
-            // TODO: give tobi for req.param(name) .. check it.
-
-            // Only parse the body once.
-            if (body) {
-                return body;
-            }
-            if (parsedRequest.method === 'POST' && parsedRequest.headers['Content-Type'] === 'application/x-www-form-urlencoded') {
-                body = parseParameters(parsedRequest.body);
-            }
-            else if (false) {
-                // other instances of the post body and how we parse it ..
-                // maybe we should create a file that parses everything fully..
-            }
-            else {
-                // the thing we got from the parse function (as it was before
-                // (unrecognised info response should be an error)
-                body = parsedRequest.body
-            }
-            return body;
-        },
+        body: body
+        ,
         get: function (field) { // would check for "Content-Type"     //// used it in the is() function.
             if (field in this.headers) {
                 return this.headers[field];
@@ -84,13 +72,13 @@ var processCompleteHttpRequest = function (command, matchingCommand, parsedReque
         },
         param: function (name) { //
             if (name in this.params) { // deal with "user/:name" command
-                return this.params[name]; /// i changed it to else if instead of if.
+                return this.params.name; /// i changed it to else if instead of if.
             }
-            if (name in this.body) { // took it from post method or any other..
-                return this.body[name];
+            if (this.body && name in this.body) { // took it from post method or any other..
+                return this.body.name;
             }
             if (name in this.query) { // done i guess .. does the get method have ?name=a&last=b?? (cuz we used that in the parsing function.
-                return this.query[name];
+                return this.query.name;
             }
             return null;
         },
@@ -204,10 +192,12 @@ var createEmptyResponse = function (socket) {
 };
 
 var isCommandMatch = function (command, potentialCommandMatch) {
-    if ((potentialCommandMatch === DEFAULT_COMMAND) || (command === DEFAULT_COMMAND)) {
+    if (potentialCommandMatch === DEFAULT_COMMAND) {
         return true;
     }
-    console.log("command: %s\r\n", command);
+    // if (command === DEFAULT_COMMAND) {
+    //     return true;
+    // }
     var matchSplit = potentialCommandMatch.split('/');
     var commandSplit = command.split('/');
     // console.log(commandSplit);
@@ -226,7 +216,10 @@ var isCommandMatch = function (command, potentialCommandMatch) {
             }
         }
     });
-    console.log(retVal);
+    if (retVal) {
+        console.log("command: %s\r\n", command);
+        console.log("matching command: %s", potentialCommandMatch);
+    }
     return retVal;
 }
 
@@ -313,6 +306,8 @@ module.exports = {
                     var commandAndMiddleware = chooseBestCommand(commands, alreadyCalledCommands, command);
                     alreadyCalledCommands.push(commandAndMiddleware.command);
                     var req = processCompleteHttpRequest(command, commandAndMiddleware.command, parsedRequest);
+                    console.log('printing request object');
+                    console.log(req);
                     commandAndMiddleware.middleware(req, res, next);
                 };
                 next();
@@ -465,4 +460,11 @@ function cookieParser(givenCookie) {
     params.subParams = subParams;
     return params;
 }
-// console.log(cookies({cookie:"aMD=BVKD; s=7"}));
+
+
+function createBody(information) {
+    if (information.body === '') {
+        return undefined;
+    }
+    return information.body;
+}
