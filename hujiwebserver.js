@@ -264,6 +264,12 @@ module.exports = {
         this.commands.push({command: '/favicon.ico', middleware: notFoundMiddleware});
         var commands = this.commands;
         var server = net.createServer(function (socket) {
+            setTimeout(function () {
+                if (socket.connected) {
+                    socket.end();
+                    return;
+                }
+            }, 2500)
             //adding to clients
             socket.key = socket.remoteAddress + ":" + socket.remotePort;
             clients.push(socket);
