@@ -23,6 +23,9 @@ function parseRequest(requestText) {
     });
     others["headers"] = headers;
     console.log(others);
+    if (others.query) {
+        console.log("contains query");
+    }
     return others;
 }
 
@@ -52,4 +55,4 @@ function splitRequestLine(requestLine, storage) {
     return 0;
 }
 
-parseRequest('GET /main.html HTTP/1.1\nHost: localhost\nUpgrade-Insecure-Requests: 1\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8\nDNT: 1\nAccept-Encoding: gzip, deflate, sdch, br\nAccept-Language: en-US,en;q=0.8,he;q=0.6\n');
+parseRequest('POST /test/json HTTP/1.1\r\nHost: localhost:8080\r\nConnection: keep-alive\r\nContent-Type: application/json\r\nContent-Length: 21\r\n\r\n{"omer":5,"gabi":"7"}');

@@ -1,4 +1,4 @@
-const net = require('net');
+var net = require('net');
 const fs = require('fs');
 const httpCodes = require('./httpCodes');
 const DEFAULT_COMMAND = '/';
@@ -158,7 +158,7 @@ var createEmptyResponse = function (socket) {
                 var firstCharUpper = key.charAt(0).toUpperCase() + key.substr(1);
                 returnStr += '; ' + firstCharUpper + '=' + obj[key]; // + '; ' ;
             });
-            console.log(returnStr);
+           //console.log(returnStr);
             return returnStr;
         },
         send: function (body) {
@@ -177,7 +177,8 @@ var createEmptyResponse = function (socket) {
             responseMsg += body;
             //socket.write(responseMsg);
             console.log("response message:\r\n %s", responseMsg);
-            socket.end(responseMsg);
+            socket.write(responseMsg);
+            socket.end();
             return this;
         }
         ,
@@ -215,8 +216,8 @@ var isCommandMatch = function (command, potentialCommandMatch) {
         }
     });
     if (retVal) {
-        console.log("command: %s\r\n", command);
-        console.log("matching command: %s", potentialCommandMatch);
+        //console.log("command: %s\r\n", command);
+        //console.log("matching command: %s", potentialCommandMatch);
     }
     return retVal;
 }
@@ -232,7 +233,7 @@ var chooseBestCommand = function (commands, alreadyCalledCommands, command) {
         // console.log(commands.length);
         var commandAndMiddleware = commands[i];
         cmd = commandAndMiddleware.command;
-        if (alreadyCalledCommands.indexOf(cmd) == -1) {
+        if (alreadyCalledCommands.indexOf(commandAndMiddleware) == -1) { // switch commandAndmw with cmd
             if (isCommandMatch(command, cmd)) {
                 return commandAndMiddleware;
             }
@@ -259,7 +260,7 @@ module.exports = {
         return this;
     },
     start: function (port, callback) {
-        console.log('Starting...');
+        //console.log('Starting...');
         this.commands.push({command: '/favicon.ico', middleware: notFoundMiddleware});
         var commands = this.commands;
         var server = net.createServer(function (socket) {
@@ -267,10 +268,10 @@ module.exports = {
             socket.key = socket.remoteAddress + ":" + socket.remotePort;
             clients.push(socket);
             var allInformationSoFar = '';
-            console.log('Starting connection at %s', socket.key);
+            //console.log('Starting connection at %s', socket.key);
             //socket error event
             socket.on("error", function (err) {
-                callback('Error creating server: ' + err);
+                callback(err);
             });
             socket.on("data", function (data) {
                 allInformationSoFar += data;
@@ -278,7 +279,7 @@ module.exports = {
                 if (!(isCompleteHttpRequest(allInformationSoFar))) {
                     return;
                 }
-                console.log("finished receiving data");
+                console.log("finished receiving data: %s", allInformationSoFar);
                 //already called commands is empty array
                  var alreadyCalledCommands = [];
                 //creating object that defines parsed request, which is going to be passed on to
@@ -290,11 +291,19 @@ module.exports = {
                 //next function chooses and executes best middleware that we havent already called
                 var next = function () {
                     var commandAndMiddleware = chooseBestCommand(commands, alreadyCalledCommands, command);
-                    alreadyCalledCommands.push(commandAndMiddleware.command);
+                    alreadyCalledCommands.push(commandAndMiddleware); //add .command
                     var req = processCompleteHttpRequest(command, commandAndMiddleware.command, parsedRequest);
                     commandAndMiddleware.middleware(req, res, next);
+                    //setting 10 second timeout
                 };
                 next();
+                setTimeout(function () {
+                    if (socket.connected)
+                    {
+                        res.status(404);
+                        res.send();
+                    }
+                }, 1000);
             });
         });
 
@@ -324,7 +333,7 @@ var isCompleteHttpRequest = function (information) {
         return isBodyComplete(firstBodySeparator, information);
     }
     if (information.indexOf(secondBodySeparator) > -1) {
-        return isBodyComplete(firstBodySeparator, information);
+        return isBodyComplete(secondBodySeparator, information);
     }
     //return true iff information is full http request
     return false;
@@ -333,7 +342,7 @@ var isCompleteHttpRequest = function (information) {
 function isBodyComplete(separator, info) {
     var separatedInfo = info.split(separator);
     if (separatedInfo[0].indexOf('Content-Length') > -1) {
-        if (parseRequest(info).headers['Content-Length'] === byteCount(separatedInfo[1])) {
+        if (parseRequest(info).headers['Content-Length'] == (separatedInfo[1]).length) {
             return true;
         }
         return false;
@@ -441,7 +450,13 @@ function cookieParser(givenCookie) {
 
 function createBody(information) {
     if (information.body === '') {
-        return undefined;
+        return null;
     }
-    return information.body;
+    try {
+        var response = JSON.parse(information.body);
+    }
+    catch(e) {
+        response = information.body;
+    }
+    return response;
 }

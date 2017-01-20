@@ -335,7 +335,7 @@ function report_test_results(){
  * running the tester with all the tests in test_l on the server.
  */
 function run_server_tests() {
-    setTimeout(function() {single_server_test(test_l[0].options, test_l[0].expected)}, 100);
+    setTimeout(function() {single_server_test(test_l[0].options, test_l[0].expected)}, 1000);
 }
 
 // array of all the tests that we're running on the server
