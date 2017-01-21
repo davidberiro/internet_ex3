@@ -176,7 +176,7 @@ var createEmptyResponse = function (socket) {
             responseMsg += "\r\n";
             responseMsg += body;
             //socket.write(responseMsg);
-            console.log("response message:\r\n %s", responseMsg);
+            //console.log("response message:\r\n %s", responseMsg);
             socket.write(responseMsg);
             socket.end();
             return this;
@@ -285,7 +285,7 @@ module.exports = {
                 if (!(isCompleteHttpRequest(allInformationSoFar))) {
                     return;
                 }
-                console.log("finished receiving data: %s", allInformationSoFar);
+                //console.log("finished receiving data: %s", allInformationSoFar);
                 //already called commands is empty array
                  var alreadyCalledCommands = [];
                 //creating object that defines parsed request, which is going to be passed on to
@@ -378,7 +378,7 @@ function parseRequest(requestText) {
             if (splitRequestLine(stringParts, others)) { //check for an error
                 //throw some error because the request line format isnt right.
                 // socket.emit(error);
-                console.log('something is wrong with the syntax');
+                //console.log('something is wrong with the syntax');
                 // return ? (if not itll return only a {{body:"...", headers{....}}
             }
         }
@@ -386,7 +386,7 @@ function parseRequest(requestText) {
             headers[stringParts[0]] = stringParts[1];
         }
         else { // should exist?
-            console.log("parsing function 'else' ?!?!?!");
+            //console.log("parsing function 'else' ?!?!?!");
         }
     });
     if (headers.cookie) {
